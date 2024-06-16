@@ -1,5 +1,6 @@
 import "~/styles/globals.css";
-
+import { ClerkProvider } from "@clerk/nextjs";
+// import { dark } from "@clerk/themes";
 import { GeistSans } from "geist/font/sans";
 import Navbar from "./_shared/layout/navbar";
 
@@ -15,11 +16,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={GeistSans.className}>
-        <Navbar />
-        {children}
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={GeistSans.className}>
+          <Navbar />
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

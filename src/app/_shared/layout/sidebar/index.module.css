@@ -61,6 +61,15 @@
   text-align: center;
 }
 
+.welcomeText {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e608e;
+  font-family: "Oswald", sans-serif;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
 .sectionContainer {
   display: flex;
   flex-direction: column;

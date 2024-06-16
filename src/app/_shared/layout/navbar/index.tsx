@@ -5,6 +5,7 @@ import styles from "./index.module.css";
 import Image from "next/image";
 import { useState } from "react";
 import Sidebar from "../sidebar";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -29,8 +30,23 @@ const Navbar = () => {
             <MagnifyingGlassIcon className={styles.searchIcon} />
           </div>
         </div>
-
-        <div className={styles.signInButton}>Sign In</div>
+        <SignedOut>
+          <SignInButton>
+            <div className={styles.signInButton}>Sign In</div>
+          </SignInButton>
+        </SignedOut>
+        <SignedIn>
+          <UserButton
+            appearance={{
+              elements: {
+                avatarBox: {
+                  width: 36,
+                  height: 36,
+                },
+              },
+            }}
+          />
+        </SignedIn>
       </div>
 
       {isSidebarOpen && (

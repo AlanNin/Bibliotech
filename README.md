@@ -5,9 +5,9 @@
 - [x] Make it deploy (Vercel)
 - [x] Set up database (w/ Vercel Postgres)
 - [x] Scaffold layout
+- [x] Auth (w/ Clerk)
 - [ ] Scaffold basic pages UI
 - [ ] Attach database to UI
-- [ ] Auth (w/ Clerk)
 - [ ] Routing
 - [ ] Server actions for delete, update, create
 

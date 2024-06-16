@@ -8,15 +8,17 @@ import {
 } from "@heroicons/react/24/outline";
 import { Section, Item } from "./section";
 import { useEffect, useState } from "react";
+import { SignInButton, SignedIn, SignedOut, useUser } from "@clerk/nextjs";
+import { getAuth } from "@clerk/nextjs/server";
 
 interface SidebarProps {
   toggleSidebar: () => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ toggleSidebar }) => {
+  const { user } = useUser();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [animationClass, setAnimationClass] = useState("");
-
   const closeSidebar = () => {
     setIsSidebarOpen(false);
     setTimeout(() => toggleSidebar(), 500);
@@ -34,8 +36,16 @@ const Sidebar: React.FC<SidebarProps> = ({ toggleSidebar }) => {
     <div className={`${styles.container} ${animationClass}`}>
       <div className={styles.wrapper}>
         <XMarkIcon className={styles.closeIcon} onClick={closeSidebar} />
-        <h1 className={styles.title}>New around here?</h1>
-        <div className={styles.signInButton}>Sign In</div>
+        <SignedOut>
+          <h1 className={styles.title}>New around here?</h1>
+          <SignInButton>
+            <div className={styles.signInButton}>Sign In</div>
+          </SignInButton>
+        </SignedOut>
+        <SignedIn>
+          <h1 className={styles.welcomeText}>Welcome, {user?.fullName}</h1>
+        </SignedIn>
+
         <div className={styles.sectionContainer}>
           <div className={styles.sectionItem}>
             <Section Section="Categories" Icon={TagIcon} />

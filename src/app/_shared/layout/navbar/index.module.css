@@ -111,6 +111,14 @@
   }
 }
 
+.userButton {
+  display: flex;
+  border-radius: 100%;
+  height: 98px;
+  width: 98px;
+  background-color: red;
+}
+
 .sidebarContainer {
   position: absolute;
   width: 100%;
