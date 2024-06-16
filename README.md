@@ -2,11 +2,12 @@
 
 ## ToDo
 
-- [] Make it deploy (Vercel)
-- [] Set up database (w/ Vercel Postgres)
-- [] Scaffold UI basic UI
+- [x] Make it deploy (Vercel)
+- [x] Set up database (w/ Vercel Postgres)
+- [x] Scaffold layout
+- [] Scaffold basic pages UI
 - [] Attach database to UI
-- [] Auth (w/ Redux)
+- [] Auth (w/ Clerk)
 - [] Routing
 - [] Server actions for delete, update, create
 

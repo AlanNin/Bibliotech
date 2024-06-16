@@ -7,7 +7,7 @@ export default function Home() {
     <main className={styles.main}>
       <div className={styles.container}>
         <h1 className={styles.title}>
-          This is <span className={styles.pinkSpan}>Bibliotech :|</span>
+          This is <span className={styles.pinkSpan}>Bibliotech </span> :D
         </h1>
       </div>
     </main>
