@@ -1,0 +1,53 @@
+.main {
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  padding-top: 72px;
+  padding-bottom: 72px;
+}
+
+.container {
+  width: max-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 24px;
+}
+
+.title {
+  font-size: 48px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: #1e608e;
+  font-family: "Oswald", sans-serif;
+  margin: 0;
+}
+
+.subTitle {
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  color: #1e608e;
+  font-family: "Oswald", sans-serif;
+  margin: 0;
+  margin-bottom: 48px;
+}
+
+.infoContainer {
+  display: flex;
+  width: max-content;
+  gap: 48px;
+}
+
+.inputsContainer {
+  display: flex;
+  width: max-content;
+  padding: 36px;
+  background: rgba(255, 255, 255, 0.8);
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  gap: 24px;
+}

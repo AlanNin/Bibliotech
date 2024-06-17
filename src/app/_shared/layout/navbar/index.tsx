@@ -1,13 +1,19 @@
 "use client";
-import { MagnifyingGlassIcon, Bars4Icon } from "@heroicons/react/24/outline";
+import {
+  MagnifyingGlassIcon,
+  Bars4Icon,
+  ArrowUpTrayIcon,
+} from "@heroicons/react/24/outline";
 import Logo from "~/../public/assets/CarritoCompras.png";
 import styles from "./index.module.css";
 import Image from "next/image";
 import { useState } from "react";
 import Sidebar from "../sidebar";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
+  const router = useRouter();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -19,7 +25,10 @@ const Navbar = () => {
         <div className={styles.leftItemsAndSearch}>
           <div className={styles.leftItems}>
             <Bars4Icon className={styles.barsIcon} onClick={toggleSidebar} />
-            <div className={styles.logoContainer}>
+            <div
+              className={styles.logoContainer}
+              onClick={() => router.push("/")}
+            >
               <Image src={Logo} alt="Shopping Cart" width={48} height={48} />
               <h1 className={styles.appName}>Bibliotech</h1>
             </div>
@@ -36,16 +45,22 @@ const Navbar = () => {
           </SignInButton>
         </SignedOut>
         <SignedIn>
-          <UserButton
-            appearance={{
-              elements: {
-                avatarBox: {
-                  width: 36,
-                  height: 36,
+          <div className={styles.rightIcons}>
+            <ArrowUpTrayIcon
+              className={styles.publishIcon}
+              onClick={() => router.push("/publish")}
+            />
+            <UserButton
+              appearance={{
+                elements: {
+                  avatarBox: {
+                    width: 36,
+                    height: 36,
+                  },
                 },
-              },
-            }}
-          />
+              }}
+            />
+          </div>
         </SignedIn>
       </div>
 

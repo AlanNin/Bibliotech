@@ -9,7 +9,6 @@ import {
 import { Section, Item } from "./section";
 import { useEffect, useState } from "react";
 import { SignInButton, SignedIn, SignedOut, useUser } from "@clerk/nextjs";
-import { getAuth } from "@clerk/nextjs/server";
 
 interface SidebarProps {
   toggleSidebar: () => void;
