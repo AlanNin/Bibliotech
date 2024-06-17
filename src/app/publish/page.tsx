@@ -1,9 +1,15 @@
 "use client";
 import styles from "./index.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "./_components/input/input";
-import { fetchBooksByTitle } from "~/server/APIs/OpenLibray.api";
-import { BooksModule } from "./_components/book/booksModule";
+import {
+  fetchBooksByTitle,
+  fetchBooksEdition,
+} from "~/server/APIs/OpenLibray.api";
+import { BooksModule } from "./_components/bookModule/booksModule";
+import { EditionsModule } from "./_components/editionModule/editionsModule";
+import { ArrowLeftCircleIcon } from "@heroicons/react/24/outline";
+import { PriceModule } from "./_components/priceModule/priceModule";
 
 export default function Publish() {
   interface Inputs {
@@ -13,9 +19,25 @@ export default function Publish() {
   const [inputs, setInputs] = useState<Inputs>({
     title: "",
   });
-
+  const [step, setStep] = useState<number>(1);
   const [showBooks, setShowBooks] = useState<boolean>(false);
   const [books, setBooks] = useState<any[]>([]);
+  const [selectedBook, setSelectedBook] = useState<any>();
+  const [bookEditions, setBookEditions] = useState<any[]>([]);
+
+  const handleSelectBook = (book: any) => {
+    if (step === 1) {
+      setSelectedBook(book);
+      setShowBooks(false);
+      setStep(2);
+    } else if (step === 2) {
+      setSelectedBook((prevSelectedBook: any) => ({
+        ...prevSelectedBook,
+        ...book,
+      }));
+      setStep(3);
+    }
+  };
 
   const handleChange = (e: any) => {
     setInputs((prev) => {
@@ -34,25 +56,76 @@ export default function Publish() {
     }
   };
 
+  useEffect(() => {
+    if (selectedBook !== undefined && step !== 3) {
+      const handleFetchBookEdition = async () => {
+        const bookKey = selectedBook.key.split("/")[2];
+        const response = await fetchBooksEdition(bookKey);
+        setBookEditions(response.entries);
+      };
+      handleFetchBookEdition();
+    }
+  }, [selectedBook]);
+
   return (
     <main className={styles.main}>
       <div className={styles.container}>
-        <h1 className={styles.title}>Publish a new book</h1>
-        <h1 className={styles.subTitle}>
-          Search your book, choose an edition and set a price!
-        </h1>
-        <div className={styles.infoContainer}>
-          <div className={styles.inputsContainer}>
-            <Input
-              label="What book are you selling?"
-              name="title"
-              placeholder="Book Name. Ex: The Great Gatsby"
-              handleChange={handleChange}
-              handleSearch={handleSearch}
+        {step === 1 && (
+          <>
+            <h1 className={styles.title}>Publish a new book</h1>
+            <h1 className={styles.subTitle}>
+              Search your book, choose an edition and set a price!
+            </h1>
+            <div className={styles.infoContainer}>
+              <div className={styles.inputsContainer}>
+                <Input
+                  label="What book are you selling?"
+                  name="title"
+                  placeholder="Book Name. Ex: The Great Gatsby"
+                  handleChange={handleChange}
+                  handleSearch={handleSearch}
+                  search={true}
+                />
+              </div>
+            </div>
+            {showBooks && (
+              <BooksModule books={books} handleSelectBook={handleSelectBook} />
+            )}
+          </>
+        )}
+        {step === 2 && (
+          <>
+            <div className={styles.backButtonTitleContainer}>
+              <ArrowLeftCircleIcon
+                className={styles.backButtonIcon}
+                onClick={() => setStep(1)}
+              />
+              <h1 className={styles.title}>Find your book edition</h1>
+            </div>
+            <h1 className={styles.subTitle}>
+              Explore the different editions of your book and choose the one
+            </h1>
+            <EditionsModule
+              books={bookEditions}
+              handleSelectBook={handleSelectBook}
             />
-          </div>
-        </div>
-        {showBooks && <BooksModule books={books} />}
+          </>
+        )}
+        {step === 3 && (
+          <>
+            <div className={styles.backButtonTitleContainer}>
+              <ArrowLeftCircleIcon
+                className={styles.backButtonIcon}
+                onClick={() => setStep(2)}
+              />
+              <h1 className={styles.title}>Time to set a price</h1>
+            </div>
+            <h1 className={styles.subTitle}>
+              Set a price for your book and publish it!
+            </h1>
+            <PriceModule selectedBook={selectedBook} />
+          </>
+        )}
       </div>
     </main>
   );

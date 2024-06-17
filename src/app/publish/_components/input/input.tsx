@@ -1,6 +1,5 @@
 "use client";
-import React, { useState } from "react";
-import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import React from "react";
 import styles from "./input.module.css";
 
 type InputProps = {
@@ -8,7 +7,8 @@ type InputProps = {
   name: string;
   placeholder: string;
   handleChange: (e: any) => void;
-  handleSearch: () => void;
+  handleSearch?: () => void;
+  search?: boolean;
 };
 
 export const Input: React.FC<InputProps> = ({
@@ -17,6 +17,7 @@ export const Input: React.FC<InputProps> = ({
   placeholder,
   handleChange,
   handleSearch,
+  search,
 }) => {
   return (
     <div className={styles.inputsContainer}>
@@ -30,11 +31,17 @@ export const Input: React.FC<InputProps> = ({
           onChange={(e) => {
             handleChange(e);
           }}
-          onKeyPress={(e) => e.key === "Enter" && handleSearch()}
+          onKeyPress={(e) => {
+            if (e.key === "Enter" && handleSearch) {
+              handleSearch();
+            }
+          }}
         />
-        <button className={styles.searchButton} onClick={handleSearch}>
-          Search
-        </button>
+        {search && (
+          <button className={styles.searchButton} onClick={handleSearch}>
+            Search
+          </button>
+        )}
       </div>
     </div>
   );

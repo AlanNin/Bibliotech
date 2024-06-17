@@ -16,6 +16,19 @@
   padding-top: 24px;
 }
 
+.backButtonTitleContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.backButtonIcon {
+  width: 32px;
+  color: #1e608e;
+  height: 32px;
+  cursor: pointer;
+}
+
 .title {
   font-size: 48px;
   font-weight: 600;
@@ -23,6 +36,7 @@
   color: #1e608e;
   font-family: "Oswald", sans-serif;
   margin: 0;
+  margin-right: 24px;
 }
 
 .subTitle {
@@ -45,7 +59,7 @@
   display: flex;
   width: max-content;
   padding: 36px;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(176, 197, 255, 0.4);
   align-items: center;
   justify-content: center;
   border-radius: 4px;
