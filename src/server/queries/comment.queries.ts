@@ -6,16 +6,18 @@ import prisma from "../prismaClient";
 export async function createCommentService(
   descripcion_comentario: string,
   id_libro: number
+
 ) {
   try {
     const { userId } = auth();
+    if (!userId) {
+      throw new Error("User ID is undefined");
+    }
     //Using prisma to create a comment
     const createdComment = await prisma.comentario.create({
       data: {
         DESCRIPCION_COMENTARIO: descripcion_comentario,
-        usuario: {
-          connect: { ID_USUARIO: id_usuario },
-        },
+        ID_USUARIO: userId?.toString(),
         libro: {
           connect: { ID_LIBRO: id_libro },
         },
@@ -68,7 +70,6 @@ export async function updateCommentService(
       where: { ID_COMENTARIO: id },
       data: {
         DESCRIPCION_COMENTARIO: descripcion_comentario,
-        ID_USUARIO: id_usuario,
         ID_LIBRO: id_libro,
       },
     });
