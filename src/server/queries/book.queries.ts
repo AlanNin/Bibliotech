@@ -37,7 +37,7 @@ import prisma from "../prismaClient";
 */
 
 //creating a book
-export async function createBookService(
+export async function createBook(
   isbn: string,
   titulo: string,
   autor: string,
@@ -60,9 +60,13 @@ export async function createBookService(
       },
     });
 
-    return createdBook;
+    return { success: true, response: createdBook };
   } catch (error) {
-    throw new Error(error);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("An unknown error occurred.");
+    }
   }
 }
 
@@ -90,7 +94,11 @@ export async function getBookService(id: number) {
 
     return requestedBook;
   } catch (error) {
-    throw new Error(error);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("An unknown error occurred.");
+    }
   }
 }
 
@@ -111,7 +119,11 @@ export async function getBookByNameService(title: String) {
     console.log(requestedBooks);
     return requestedBooks;
   } catch (error) {
-    throw new Error(error);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("An unknown error occurred.");
+    }
   }
 }
 
@@ -140,7 +152,11 @@ export async function updateBookService(
 
     return requestedBook;
   } catch (error) {
-    throw new Error(error);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("An unknown error occurred.");
+    }
   }
 }
 
@@ -153,6 +169,10 @@ export async function deleteBookService(id: number) {
 
     return requestedBook;
   } catch (error) {
-    throw new Error(error);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("An unknown error occurred.");
+    }
   }
 }

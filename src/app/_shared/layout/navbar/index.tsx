@@ -1,9 +1,5 @@
 "use client";
-import {
-  MagnifyingGlassIcon,
-  Bars4Icon,
-  ArrowUpTrayIcon,
-} from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon, Bars4Icon } from "@heroicons/react/24/outline";
 import Logo from "~/../public/assets/CarritoCompras.png";
 import styles from "./index.module.css";
 import Image from "next/image";
