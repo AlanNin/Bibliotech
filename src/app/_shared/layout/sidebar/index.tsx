@@ -9,12 +9,14 @@ import {
 import { Section, Item } from "./section";
 import { useEffect, useState } from "react";
 import { SignInButton, SignedIn, SignedOut, useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 interface SidebarProps {
   toggleSidebar: () => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ toggleSidebar }) => {
+  const router = useRouter();
   const { user } = useUser();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [animationClass, setAnimationClass] = useState("");
@@ -46,6 +48,18 @@ const Sidebar: React.FC<SidebarProps> = ({ toggleSidebar }) => {
         </SignedIn>
 
         <div className={styles.sectionContainer}>
+          {user?.publicMetadata.role === "admin" && (
+            <div className={styles.sectionItem}>
+              <Section Section="Admin Panel" Icon={GiftIcon} />
+              <Item
+                Item="Publish"
+                handleClick={() => {
+                  router.push("/admin/publish");
+                  closeSidebar();
+                }}
+              />
+            </div>
+          )}
           <div className={styles.sectionItem}>
             <Section Section="Categories" Icon={TagIcon} />
             <Item Item="Action" />

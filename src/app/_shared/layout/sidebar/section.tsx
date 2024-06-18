@@ -8,6 +8,7 @@ interface SectionProps {
 
 interface ItemProps {
   Item: string;
+  handleClick?: () => void;
 }
 
 export const Section: React.FC<SectionProps> = ({ Section, Icon }) => {
@@ -19,9 +20,9 @@ export const Section: React.FC<SectionProps> = ({ Section, Icon }) => {
   );
 };
 
-export const Item: React.FC<ItemProps> = ({ Item }) => {
+export const Item: React.FC<ItemProps> = ({ Item, handleClick }) => {
   return (
-    <div className={styles.subItemDiv}>
+    <div className={styles.subItemDiv} onClick={handleClick}>
       <h1 className={styles.subItemText}> {Item} </h1>
     </div>
   );

@@ -9,18 +9,11 @@ import styles from "./index.module.css";
 import Image from "next/image";
 import { useState } from "react";
 import Sidebar from "../sidebar";
-import {
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-  useUser,
-} from "@clerk/nextjs";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const router = useRouter();
-  const { user } = useUser();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -53,13 +46,6 @@ const Navbar = () => {
         </SignedOut>
         <SignedIn>
           <div className={styles.rightIcons}>
-            {user?.publicMetadata.role === "admin" && (
-              <ArrowUpTrayIcon
-                className={styles.publishIcon}
-                onClick={() => router.push("/admin/publish")}
-              />
-            )}
-
             <UserButton
               appearance={{
                 elements: {
