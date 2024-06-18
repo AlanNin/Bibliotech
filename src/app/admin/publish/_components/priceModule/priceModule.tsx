@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import { Input } from "../input/input";
 import styles from "./priceModule.module.css";
 type PriceProps = {
@@ -74,6 +74,14 @@ export const PriceModule: React.FC<PriceProps> = ({ selectedBook }) => {
         name="price"
         placeholder="$USD"
         handleChange={handleChange}
+        format="decimal"
+      />
+      <Input
+        label="How many copies are you adding?"
+        name="quantity"
+        placeholder="Quantity"
+        handleChange={handleChange}
+        format="number"
       />
       <button className={styles.publishButton}>Publish</button>
     </div>

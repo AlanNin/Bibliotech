@@ -1,13 +1,14 @@
 "use server";
+import { auth } from "@clerk/nextjs/server";
 import prisma from "../prismaClient";
 
 //Creating comments
 export async function createCommentService(
   descripcion_comentario: string,
-  id_usuario: number,
   id_libro: number
 ) {
   try {
+    const { userId } = auth();
     //Using prisma to create a comment
     const createdComment = await prisma.comentario.create({
       data: {

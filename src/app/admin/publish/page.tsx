@@ -10,12 +10,18 @@ import { BooksModule } from "./_components/bookModule/booksModule";
 import { EditionsModule } from "./_components/editionModule/editionsModule";
 import { ArrowLeftCircleIcon } from "@heroicons/react/24/outline";
 import { PriceModule } from "./_components/priceModule/priceModule";
+import { useUser } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
+
+interface Inputs {
+  title: string;
+}
 
 export default function Publish() {
-  interface Inputs {
-    title: string;
+  const { user } = useUser();
+  if (user?.publicMetadata.role !== "admin") {
+    redirect("/");
   }
-
   const [inputs, setInputs] = useState<Inputs>({
     title: "",
   });
@@ -121,7 +127,7 @@ export default function Publish() {
               <h1 className={styles.title}>Time to set a price</h1>
             </div>
             <h1 className={styles.subTitle}>
-              Set a price for your book and publish it!
+              Set a price for this book and publish it!
             </h1>
             <PriceModule selectedBook={selectedBook} />
           </>
