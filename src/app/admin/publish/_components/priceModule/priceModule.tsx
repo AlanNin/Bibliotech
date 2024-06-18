@@ -85,38 +85,40 @@ export const PriceModule: React.FC<PriceProps> = ({
           )}
         </div>
       </div>
-      <Input
-        label="Price of the book"
-        name="price"
-        placeholder="$USD"
-        handleChange={handleChange}
-        format="decimal"
-      />
-      <Input
-        label="How many copies are you adding?"
-        name="quantity"
-        placeholder="Quantity"
-        handleChange={handleChange}
-        format="number"
-      />
-      <button
-        className={styles.publishButton}
-        onClick={() =>
-          handlePublish(
-            isbn,
-            title,
-            author,
-            editorial,
-            edition_date,
-            cover,
-            rating,
-            inputs.price,
-            inputs.quantity
-          )
-        }
-      >
-        Publish
-      </button>
+      <div className={styles.formContainter}>
+        <Input
+          label="Price of the book"
+          name="price"
+          placeholder="$USD"
+          handleChange={handleChange}
+          format="decimal"
+        />
+        <Input
+          label="How many copies are you adding?"
+          name="quantity"
+          placeholder="Quantity"
+          handleChange={handleChange}
+          format="number"
+        />
+        <button
+          className={styles.publishButton}
+          onClick={() =>
+            handlePublish(
+              isbn,
+              title,
+              author,
+              editorial,
+              edition_date,
+              cover,
+              rating,
+              inputs.price,
+              inputs.quantity
+            )
+          }
+        >
+          Publish
+        </button>
+      </div>
     </div>
   );
 };
