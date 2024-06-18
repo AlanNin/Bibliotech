@@ -41,25 +41,15 @@ model Libro_Genero {
   libro   Libro   @relation(fields: [ID_LIBRO], references: [ID_LIBRO])
 }
 
-model Usuario {
-  ID_USUARIO         Int          @id @default(autoincrement())
-  NOMBRE         String 
-  CORREO_ELECTRONICO String       @unique       
-  CONTRASENA         String       
-  FECHA_CREACION     DateTime     @default(now())
-  Comentario         Comentario[]
-  Ventas             Ventas[]
-}
 
 model Comentario {
   ID_COMENTARIO          Int      @id @default(autoincrement())
   DESCRIPCION_COMENTARIO String   @db.Text
   FECHA_COMENTARIO       DateTime @default(now()) @db.Date
-  ID_USUARIO             Int
+  ID_USUARIO             String
   ID_LIBRO               Int
 
   // Relaciones con Usuario y Libro
-  usuario Usuario @relation(fields: [ID_USUARIO], references: [ID_USUARIO])
   libro   Libro   @relation(fields: [ID_LIBRO], references: [ID_LIBRO])
 }
 
@@ -88,6 +78,5 @@ model Ventas {
   ejemplar Ejemplar @relation(fields: [NUM_EJEMPLAR], references: [NUM_EJEMPLAR])
   NUM_EJEMPLAR    Int  
   
-  usuario  Usuario  @relation(fields: [ID_USUARIO], references: [ID_USUARIO])
-  ID_USUARIO      Int 
+  ID_USUARIO      String 
 }

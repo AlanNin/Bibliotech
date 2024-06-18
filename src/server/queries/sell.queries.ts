@@ -1,4 +1,5 @@
 "use server";
+import { auth } from "@clerk/nextjs/server";
 import prisma from "../prismaClient";
 
 //Creating sells
@@ -12,6 +13,10 @@ export async function createSellService(
 
 ) {
     try {
+        const { userId } = auth();
+    if (!userId) {
+      throw new Error("User ID is undefined");
+    }
         //Using prisma to create a sell
         const createdSell = await prisma.ventas.create({
             data: {
@@ -22,9 +27,7 @@ export async function createSellService(
                 ejemplar : {
                     connect:{NUM_EJEMPLAR : num_ejemplar}
                 },
-                usuario :{
-                    connect:{ID_USUARIO: id_usuario}
-                }
+                ID_USUARIO : userId?.toString()
             }
         });
 
@@ -72,7 +75,6 @@ export async function updateSellService(
     subtotal : any, 
     total : any, 
     num_ejemplar : number, 
-    id_usuario : number 
 ) 
 {
     try {
@@ -84,7 +86,6 @@ export async function updateSellService(
                 SUBTOTAL: subtotal,
                 TOTAL: total,
                 NUM_EJEMPLAR: num_ejemplar,
-                ID_USUARIO: id_usuario
             }
         })
         
