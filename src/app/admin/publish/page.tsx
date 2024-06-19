@@ -12,7 +12,11 @@ import { ArrowLeftCircleIcon } from "@heroicons/react/24/outline";
 import { PriceModule } from "./_components/priceModule/priceModule";
 import { useUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import { createBook } from "~/server/queries/book.queries";
+import {
+  addCopies,
+  createBook,
+  updateBook,
+} from "~/server/queries/book.queries";
 
 interface Inputs {
   title: string;
@@ -71,6 +75,7 @@ export default function Publish() {
     edition_date: string,
     cover: string,
     rating: number,
+    physical_format: string,
     price: number,
     quantity: number
   ) => {
@@ -82,7 +87,10 @@ export default function Publish() {
         editorial,
         edition_date,
         cover,
-        rating
+        rating,
+        physical_format,
+        price,
+        quantity
       );
       if (response.success === true) {
         setShowBooks(false);
@@ -95,8 +103,22 @@ export default function Publish() {
     }
   };
 
+  const handleAddCopies = async (isbn: string, quantity: number) => {
+    if (selectedBook) {
+      const response = await addCopies(isbn, quantity);
+      if (response) {
+        setShowBooks(false);
+        setStep(1);
+        setSelectedBook(null);
+        setBookEditions([]);
+      } else {
+        //
+      }
+    }
+  };
+
   useEffect(() => {
-    if (selectedBook !== undefined && step !== 3) {
+    if (selectedBook && selectedBook !== undefined && step !== 3) {
       const handleFetchBookEdition = async () => {
         const bookKey = selectedBook.key.split("/")[2];
         const response = await fetchBooksEdition(bookKey);
@@ -165,6 +187,7 @@ export default function Publish() {
             <PriceModule
               selectedBook={selectedBook}
               handlePublish={handlePublish}
+              handleAddCopies={handleAddCopies}
             />
           </>
         )}

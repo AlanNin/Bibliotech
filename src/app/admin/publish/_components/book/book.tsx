@@ -4,10 +4,15 @@ import ReactLoading from "react-loading";
 
 type BookProps = {
   book: any;
+  showingEditions?: boolean;
   handleSelectBook(book: any): void;
 };
 
-export const BookItem: React.FC<BookProps> = ({ book, handleSelectBook }) => {
+export const BookItem: React.FC<BookProps> = ({
+  book,
+  showingEditions,
+  handleSelectBook,
+}) => {
   return (
     <div
       className={styles.bookContainer}
@@ -27,7 +32,7 @@ export const BookItem: React.FC<BookProps> = ({ book, handleSelectBook }) => {
       <div className={styles.bookInfoContainer}>
         <h1 className={styles.bookTitle}>{book.title}</h1>
         <p className={styles.bookAuthor}>
-          Author:{" "}
+          {showingEditions ? "Editorial" : "Author"}:{" "}
           {book?.author_name
             ? book?.author_name[0]
             : book?.publishers

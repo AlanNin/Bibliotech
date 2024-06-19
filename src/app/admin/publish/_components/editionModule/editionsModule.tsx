@@ -21,6 +21,7 @@ export const EditionsModule: React.FC<BookProps> = ({
             <BookItem
               key={book.key}
               book={book}
+              showingEditions={true}
               handleSelectBook={handleSelectBook}
             />
           ))}

@@ -1,0 +1,14 @@
+.bookContainer {
+  display: flex;
+  flex-direction: column;
+  height: max-content;
+  width: max-content;
+  cursor: pointer;
+}
+
+.bookCover {
+  width: 200px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+}

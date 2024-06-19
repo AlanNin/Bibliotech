@@ -19,7 +19,7 @@ model Libro {
   FECHA_EDICION  String   @db.VarChar(255)
   IMAGEURL       String   @db.VarChar(255)
   CALIFICACION   Decimal  @db.Decimal(18, 2)
-  TIPO_TAPA          String   @db.VarChar(255)
+  TIPO_TAPA          String?   @db.VarChar(255)
   PRECIO             Decimal  @db.Decimal(10, 2)
   CANTIDAD_LIBROS               Int
 

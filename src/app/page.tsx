@@ -1,12 +1,29 @@
-import Link from "next/link";
-
+"use client";
 import styles from "./index.module.css";
+import { getAllBooks } from "~/server/queries/book.queries";
+import { useEffect, useState } from "react";
+import { BookCard } from "./_home_components/bookCard";
 
 export default function Home() {
+  const [books, setBooks] = useState<any>();
+
+  useEffect(() => {
+    const fetchBooks = async () => {
+      const response = await getAllBooks();
+      console.log(response);
+      setBooks(response);
+    };
+    fetchBooks();
+  }, []);
+
   return (
     <main className={styles.main}>
       <div className={styles.container}>
-        <h1 className={styles.title}> Home (In progress)</h1>
+        <div className={styles.booksWrapper}>
+          {books?.map((book: any) => (
+            <BookCard key={book.key} book={book} />
+          ))}
+        </div>
       </div>
     </main>
   );

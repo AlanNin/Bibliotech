@@ -36,6 +36,30 @@ import prisma from "../prismaClient";
 
 */
 
+// BOOKS EXISTS
+export async function bookExists(
+  isbn: string
+): Promise<{ success: boolean; response?: any }> {
+  try {
+    const book = await prisma.libro.findFirst({
+      where: {
+        ISBN: String(isbn),
+      },
+    });
+    if (book) {
+      return { success: true, response: book };
+    } else {
+      return { success: false };
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      return { success: false };
+    }
+  }
+}
+
 //creating a book
 export async function createBook(
   isbn: string,
@@ -44,16 +68,16 @@ export async function createBook(
   editorial: string,
   fecha_edicion: string,
   imageurl: string,
-  calificacion: any,
-  tipo_tapa: any,
-  precio: any,
-  cantidad_libros: any,
+  calificacion: number,
+  tipo_tapa: string,
+  precio: number,
+  cantidad_libros: number
 ) {
   try {
     //Using prisma to create a book
     const createdBook = await prisma.libro.create({
       data: {
-        ISBN: isbn,
+        ISBN: String(isbn),
         TITULO: titulo,
         AUTOR: autor,
         EDITORIAL: editorial,
@@ -62,8 +86,7 @@ export async function createBook(
         CALIFICACION: calificacion,
         TIPO_TAPA: tipo_tapa,
         PRECIO: precio,
-        CANTIDAD_LIBROS: cantidad_libros
-
+        CANTIDAD_LIBROS: cantidad_libros,
       },
     });
 
@@ -78,7 +101,7 @@ export async function createBook(
 }
 
 //Getting all of the database books
-export async function getAllBooksService() {
+export async function getAllBooks() {
   try {
     //Using prisma "findMany" to get all books
     const requestedBooks = await prisma.libro.findMany();
@@ -134,24 +157,57 @@ export async function getBookByNameService(title: String) {
   }
 }
 
+// add copies
+export async function addCopies(isbn: string, cantidad_libros: number) {
+  try {
+    const book = await prisma.libro.findFirst({
+      where: { ISBN: String(isbn) },
+    });
+
+    if (!book) {
+      throw new Error("Book not found.");
+    }
+
+    const newCantidadLibros = book.CANTIDAD_LIBROS + cantidad_libros;
+
+    const updatedBook = await prisma.libro.update({
+      where: { ID_LIBRO: book.ID_LIBRO },
+      data: {
+        CANTIDAD_LIBROS: newCantidadLibros,
+      },
+    });
+
+    return updatedBook;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("An unknown error occurred.");
+    }
+  }
+}
+
 //updating a book
-export async function updateBookService(
-  id: number,
+export async function updateBook(
   isbn: string,
-  titulo: string,
-  autor: string,
-  editorial: string,
-  fecha_edicion: string,
-  calificacion: any,
-  tipo_tapa: any,
-  precio: any,
-  cantidad_libros: any,
+  titulo?: string,
+  autor?: string,
+  editorial?: string,
+  fecha_edicion?: string,
+  calificacion?: any,
+  tipo_tapa?: any,
+  precio?: any,
+  cantidad_libros?: any
 ) {
   try {
+    const book = await prisma.libro.findFirst({
+      where: { ISBN: String(isbn) },
+    });
+
     const requestedBook = await prisma.libro.update({
-      where: { ID_LIBRO: id },
+      where: { ID_LIBRO: book?.ID_LIBRO },
       data: {
-        ISBN: isbn,
+        ISBN: String(isbn),
         TITULO: titulo,
         AUTOR: autor,
         EDITORIAL: editorial,
@@ -159,7 +215,7 @@ export async function updateBookService(
         CALIFICACION: calificacion,
         TIPO_TAPA: tipo_tapa,
         PRECIO: precio,
-        CANTIDAD_LIBROS: cantidad_libros
+        CANTIDAD_LIBROS: cantidad_libros,
       },
     });
 
