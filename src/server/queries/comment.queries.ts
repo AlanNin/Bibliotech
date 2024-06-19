@@ -6,7 +6,6 @@ import prisma from "../prismaClient";
 export async function createCommentService(
   descripcion_comentario: string,
   id_libro: number
-
 ) {
   try {
     const { userId } = auth();
@@ -26,7 +25,11 @@ export async function createCommentService(
 
     return createdComment;
   } catch (error) {
-    throw new Error(error);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("An unknown error occurred.");
+    }
   }
 }
 
@@ -54,7 +57,11 @@ export async function getCommentService(id: number) {
 
     return requestedComments;
   } catch (error) {
-    throw new Error(error);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("An unknown error occurred.");
+    }
   }
 }
 
@@ -76,7 +83,11 @@ export async function updateCommentService(
 
     return requestedComment;
   } catch (error) {
-    throw new Error(error);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("An unknown error occurred.");
+    }
   }
 }
 
@@ -89,6 +100,10 @@ export async function deleteCommentService(id: number) {
 
     return requestedComment;
   } catch (error) {
-    throw new Error(error);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("An unknown error occurred.");
+    }
   }
 }

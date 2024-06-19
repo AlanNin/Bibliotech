@@ -4,9 +4,23 @@ import { Input } from "../input/input";
 import styles from "./priceModule.module.css";
 type PriceProps = {
   selectedBook: any;
+  handlePublish: (
+    isbn: string,
+    title: string,
+    author: string,
+    editorial: string,
+    edition_date: string,
+    cover: string,
+    rating: number,
+    price: number,
+    quantity: number
+  ) => void;
 };
 
-export const PriceModule: React.FC<PriceProps> = ({ selectedBook }) => {
+export const PriceModule: React.FC<PriceProps> = ({
+  selectedBook,
+  handlePublish,
+}) => {
   const isbn = selectedBook?.isbn_13;
   const title = selectedBook?.title;
   const author = selectedBook?.author_name[0];
@@ -20,11 +34,13 @@ export const PriceModule: React.FC<PriceProps> = ({ selectedBook }) => {
   const rating = selectedBook?.ratings_average?.toFixed(1);
 
   interface Inputs {
-    price: string;
+    price: number;
+    quantity: number;
   }
 
   const [inputs, setInputs] = useState<Inputs>({
-    price: "",
+    price: 0,
+    quantity: 0,
   });
 
   const handleChange = (e: any) => {
@@ -69,21 +85,40 @@ export const PriceModule: React.FC<PriceProps> = ({ selectedBook }) => {
           )}
         </div>
       </div>
-      <Input
-        label="Price of the book"
-        name="price"
-        placeholder="$USD"
-        handleChange={handleChange}
-        format="decimal"
-      />
-      <Input
-        label="How many copies are you adding?"
-        name="quantity"
-        placeholder="Quantity"
-        handleChange={handleChange}
-        format="number"
-      />
-      <button className={styles.publishButton}>Publish</button>
+      <div className={styles.formContainter}>
+        <Input
+          label="Price of the book"
+          name="price"
+          placeholder="$USD"
+          handleChange={handleChange}
+          format="decimal"
+        />
+        <Input
+          label="How many copies are you adding?"
+          name="quantity"
+          placeholder="Quantity"
+          handleChange={handleChange}
+          format="number"
+        />
+        <button
+          className={styles.publishButton}
+          onClick={() =>
+            handlePublish(
+              isbn,
+              title,
+              author,
+              editorial,
+              edition_date,
+              cover,
+              rating,
+              inputs.price,
+              inputs.quantity
+            )
+          }
+        >
+          Publish
+        </button>
+      </div>
     </div>
   );
 };

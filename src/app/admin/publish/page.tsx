@@ -12,6 +12,7 @@ import { ArrowLeftCircleIcon } from "@heroicons/react/24/outline";
 import { PriceModule } from "./_components/priceModule/priceModule";
 import { useUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
+import { createBook } from "~/server/queries/book.queries";
 
 interface Inputs {
   title: string;
@@ -59,6 +60,38 @@ export default function Publish() {
       setBooks(response.docs);
     } else {
       setShowBooks(false);
+    }
+  };
+
+  const handlePublish = async (
+    isbn: string,
+    title: string,
+    author: string,
+    editorial: string,
+    edition_date: string,
+    cover: string,
+    rating: number,
+    price: number,
+    quantity: number
+  ) => {
+    if (selectedBook) {
+      const response = await createBook(
+        isbn,
+        title,
+        author,
+        editorial,
+        edition_date,
+        cover,
+        rating
+      );
+      if (response.success === true) {
+        setShowBooks(false);
+        setStep(1);
+        setSelectedBook(null);
+        setBookEditions([]);
+      } else {
+        //
+      }
     }
   };
 
@@ -129,7 +162,10 @@ export default function Publish() {
             <h1 className={styles.subTitle}>
               Set a price for this book and publish it!
             </h1>
-            <PriceModule selectedBook={selectedBook} />
+            <PriceModule
+              selectedBook={selectedBook}
+              handlePublish={handlePublish}
+            />
           </>
         )}
       </div>
