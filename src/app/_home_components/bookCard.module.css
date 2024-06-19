@@ -4,6 +4,8 @@
   height: max-content;
   width: max-content;
   cursor: pointer;
+  padding: 0;
+  margin: 0;
 }
 
 .bookCover {
