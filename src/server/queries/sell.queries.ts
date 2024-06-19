@@ -85,7 +85,9 @@ export async function updateSellService(
                 IMPUESTOS: impuestos,
                 SUBTOTAL: subtotal,
                 TOTAL: total,
-                ID_LIBRO: id_libro,
+                libro : {
+                    connect:{ID_LIBRO : id_libro}
+                },
             }
         })
         
