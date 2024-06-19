@@ -19,10 +19,11 @@ model Libro {
   FECHA_EDICION  String   @db.VarChar(255)
   IMAGEURL       String   @db.VarChar(255)
   CALIFICACION   Decimal  @db.Decimal(18, 2)
-
+  TIPO_TAPA          String   @db.VarChar(255)
+  PRECIO             Decimal  @db.Decimal(10, 2)
   Libro_Genero Libro_Genero[]
   Comentario   Comentario[]
-  Ejemplar     Ejemplar[]
+  ventas Ventas[]
 }
 
 model Genero {
@@ -53,19 +54,7 @@ model Comentario {
   libro   Libro   @relation(fields: [ID_LIBRO], references: [ID_LIBRO])
 }
 
-model Ejemplar {
-  NUM_EJEMPLAR       Int      @id @default(autoincrement())
-  FECHA_ADQUISICION  DateTime @db.Date
-  UBICACION_LIBRERIA String   @db.VarChar(255)
-  PRECIO             Decimal  @db.Decimal(10, 2)
-  ESTADO             String   @db.VarChar(255)
-  TIPO_TAPA          String   @db.VarChar(255)
-  ID_LIBRO           Int
 
-  // Relación con Libro
-  libro  Libro    @relation(fields: [ID_LIBRO], references: [ID_LIBRO])
-  Ventas Ventas[]
-}
 
 model Ventas {
   ID_VENTAS       Int      @id @default(autoincrement())
@@ -74,9 +63,10 @@ model Ventas {
   IMPUESTOS       Decimal  @db.Decimal(10, 2)
   SUBTOTAL        Decimal  @db.Decimal(10, 2)
   TOTAL           Decimal  @db.Decimal(10, 2)
-  // Relaciones con Ejemplar y Usuario
-  ejemplar Ejemplar @relation(fields: [NUM_EJEMPLAR], references: [NUM_EJEMPLAR])
-  NUM_EJEMPLAR    Int  
+  ID_LIBRO    Int  
+  libro   Libro   @relation(fields: [ID_LIBRO], references: [ID_LIBRO])
+
+
   
   ID_USUARIO      String 
 }

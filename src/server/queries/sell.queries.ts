@@ -8,8 +8,8 @@ export async function createSellService(
     impuestos : any, 
     subtotal : any, 
     total : any, 
-    num_ejemplar : number, 
-    id_usuario : number,
+    id_libro : number, 
+    
 
 ) {
     try {
@@ -24,8 +24,8 @@ export async function createSellService(
                 IMPUESTOS: impuestos,
                 SUBTOTAL: subtotal,
                 TOTAL: total,
-                ejemplar : {
-                    connect:{NUM_EJEMPLAR : num_ejemplar}
+                libro : {
+                    connect:{ID_LIBRO : id_libro}
                 },
                 ID_USUARIO : userId?.toString()
             }
@@ -74,7 +74,7 @@ export async function updateSellService(
     impuestos : any, 
     subtotal : any, 
     total : any, 
-    num_ejemplar : number, 
+    id_libro : number, 
 ) 
 {
     try {
@@ -85,7 +85,7 @@ export async function updateSellService(
                 IMPUESTOS: impuestos,
                 SUBTOTAL: subtotal,
                 TOTAL: total,
-                NUM_EJEMPLAR: num_ejemplar,
+                ID_LIBRO: id_libro,
             }
         })
         
