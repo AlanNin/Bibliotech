@@ -21,6 +21,8 @@ model Libro {
   CALIFICACION   Decimal  @db.Decimal(18, 2)
   TIPO_TAPA          String   @db.VarChar(255)
   PRECIO             Decimal  @db.Decimal(10, 2)
+  CANTIDAD_LIBROS               Int
+
   Libro_Genero Libro_Genero[]
   Comentario   Comentario[]
   ventas Ventas[]

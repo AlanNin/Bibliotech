@@ -44,7 +44,10 @@ export async function createBook(
   editorial: string,
   fecha_edicion: string,
   imageurl: string,
-  calificacion: any
+  calificacion: any,
+  tipo_tapa: any,
+  precio: any,
+  cantidad_libros: any,
 ) {
   try {
     //Using prisma to create a book
@@ -57,6 +60,10 @@ export async function createBook(
         FECHA_EDICION: fecha_edicion,
         IMAGEURL: imageurl,
         CALIFICACION: calificacion,
+        TIPO_TAPA: tipo_tapa,
+        PRECIO: precio,
+        CANTIDAD_LIBROS: cantidad_libros
+
       },
     });
 
@@ -135,7 +142,10 @@ export async function updateBookService(
   autor: string,
   editorial: string,
   fecha_edicion: string,
-  calificacion: any
+  calificacion: any,
+  tipo_tapa: any,
+  precio: any,
+  cantidad_libros: any,
 ) {
   try {
     const requestedBook = await prisma.libro.update({
@@ -147,6 +157,9 @@ export async function updateBookService(
         EDITORIAL: editorial,
         FECHA_EDICION: fecha_edicion,
         CALIFICACION: calificacion,
+        TIPO_TAPA: tipo_tapa,
+        PRECIO: precio,
+        CANTIDAD_LIBROS: cantidad_libros
       },
     });
 
