@@ -5,6 +5,7 @@ import {
   TagIcon,
   ShoppingBagIcon,
   GiftIcon,
+  WrenchScrewdriverIcon,
 } from "@heroicons/react/24/outline";
 import { Section, Item } from "./section";
 import { useEffect, useState } from "react";
@@ -50,7 +51,7 @@ const Sidebar: React.FC<SidebarProps> = ({ toggleSidebar }) => {
         <div className={styles.sectionContainer}>
           {user?.publicMetadata.role === "admin" && (
             <div className={styles.sectionItem}>
-              <Section Section="Admin Panel" Icon={GiftIcon} />
+              <Section Section="Admin Panel" Icon={WrenchScrewdriverIcon} />
               <Item
                 Item="Publish"
                 handleClick={() => {

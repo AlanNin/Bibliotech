@@ -49,7 +49,6 @@ export const PriceModule: React.FC<PriceProps> = ({
     const checkBookExists = async (isbn: string) => {
       try {
         const response = await bookExists(isbn);
-        console.log(response);
         if (response.success) {
           setIsbnExists(true);
         } else {

@@ -10,7 +10,6 @@ export default function Home() {
   useEffect(() => {
     const fetchBooks = async () => {
       const response = await getAllBooks();
-      console.log(response);
       setBooks(response);
     };
     fetchBooks();
