@@ -3,7 +3,7 @@ import { MagnifyingGlassIcon, Bars4Icon } from "@heroicons/react/24/outline";
 import Logo from "~/../public/assets/CarritoCompras.png";
 import styles from "./index.module.css";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "../sidebar";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
@@ -14,6 +14,18 @@ const Navbar = () => {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
+  useEffect(() => {
+    if (isSidebarOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isSidebarOpen]);
 
   return (
     <>
