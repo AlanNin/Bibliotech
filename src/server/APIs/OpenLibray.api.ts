@@ -13,3 +13,8 @@ export const fetchBooksEdition = async (olid: string) => {
   const response = await axios.get(`${API_URL}works/${olid}/editions.json`);
   return response.data;
 };
+
+export const fetchBooksByISBN = async (isbn: string) => {
+  const response = await axios.get(`${API_URL}isbn/${isbn}.json`);
+  return response.data;
+};

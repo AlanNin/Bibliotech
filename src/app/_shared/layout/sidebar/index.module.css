@@ -25,11 +25,11 @@
 }
 
 .open {
-  animation: slideIn 0.5s forwards;
+  animation: slideIn 0.35s forwards;
 }
 
 .close {
-  animation: slideOut 0.5s forwards;
+  animation: slideOut 0.35s forwards;
 }
 
 .wrapper {

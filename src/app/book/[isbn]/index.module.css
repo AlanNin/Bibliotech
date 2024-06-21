@@ -1,0 +1,29 @@
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.main {
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+  padding-top: 72px;
+  padding-bottom: 72px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 44px;
+  gap: 52px;
+}
+
+.cover {
+  width: 290px;
+  height: 465px;
+  object-fit: cover;
+}

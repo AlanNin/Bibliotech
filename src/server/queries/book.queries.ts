@@ -132,6 +132,25 @@ export async function getBookService(id: number) {
   }
 }
 
+export async function getBookByISBN(isbn: string) {
+  try {
+    //with findUnique you can search for "Unique" denominated fields on prisma schema
+    const requestedBook = await prisma.libro.findFirst({
+      where: {
+        ISBN: isbn,
+      },
+    });
+
+    return requestedBook;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("An unknown error occurred.");
+    }
+  }
+}
+
 //Getting books by the words on the title
 export async function getBookByNameService(title: String) {
   try {
