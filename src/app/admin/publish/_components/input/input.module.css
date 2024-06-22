@@ -8,7 +8,7 @@
   font-weight: 400;
   color: black;
   font-family: "Oswald", sans-serif;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .input {
@@ -18,10 +18,11 @@
   font-size: 16px;
   font-weight: 300;
   color: black;
-  background-color: rgb(168, 168, 168);
-  border: none;
+  background-color: rgb(221, 221, 221);
+  border: 1px solid rgb(0, 0, 0, 0.2);
   border-radius: 4px;
   font-family: "Oswald", sans-serif;
+  letter-spacing: 0.5px;
 
   &&::placeholder {
     color: black;
@@ -49,8 +50,8 @@
   font-size: 16px;
   font-weight: 400;
   color: black;
-  background-color: rgb(168, 168, 168);
-  border: none;
+  background-color: rgb(221, 221, 221);
+  border: 1px solid rgb(0, 0, 0, 0.2);
   border-radius: 4px;
   font-family: "Oswald", sans-serif;
   padding: 4px 10px;

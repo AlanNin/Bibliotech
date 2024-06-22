@@ -1,13 +1,14 @@
 .booksContainer {
-  background-color: rgba(71, 123, 145, 0.2);
+  background-color: rgb(185, 217, 241, 0.8);
   display: flex;
-  border-radius: 4px;
-  padding: 24px;
-  width: 100%;
+  border-radius: 8px;
+  width: 80%;
   overflow-y: auto;
   align-items: center;
   justify-content: center;
   scrollbar-width: none;
+  margin-top: 24px;
+  padding: 0;
 }
 
 .booksModule {
@@ -15,6 +16,6 @@
   align-items: center;
   justify-content: center;
   display: flex;
-  gap: 14px;
-  width: 100%;
+  padding: 48px 0px;
+  gap: 24px;
 }

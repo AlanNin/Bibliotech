@@ -12,11 +12,10 @@ import { ArrowLeftCircleIcon } from "@heroicons/react/24/outline";
 import { PriceModule } from "./_components/priceModule/priceModule";
 import { useUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import {
-  addCopies,
-  createBook,
-  updateBook,
-} from "~/server/queries/book.queries";
+import { addCopies, createBook } from "~/server/queries/book.queries";
+import BookIlustration1 from "~/../public/assets/BookIlustration1.webp";
+import BookIlustration2 from "~/../public/assets/BookIlustration2.webp";
+import Image from "next/image";
 
 interface Inputs {
   title: string;
@@ -105,6 +104,12 @@ export default function Publish() {
     }
   };
 
+  const handleStepBack = () => {
+    setBookEditions([]);
+    setSelectedBook(null);
+    setStep((prev) => prev - 1);
+  };
+
   const handleAddCopies = async (isbn: string, quantity: number) => {
     if (selectedBook) {
       const response = await addCopies(isbn, quantity);
@@ -135,6 +140,7 @@ export default function Publish() {
       <div className={styles.container}>
         {step === 1 && (
           <>
+            <Image alt="bookIlustration" src={BookIlustration1} height={200} />
             <h1 className={styles.title}>Publish a new book</h1>
             <h1 className={styles.subTitle}>
               Search your book, choose an edition and set a price!
@@ -142,9 +148,9 @@ export default function Publish() {
             <div className={styles.infoContainer}>
               <div className={styles.inputsContainer}>
                 <Input
-                  label="What book are you selling?"
+                  label="What is the title of your book?"
                   name="title"
-                  placeholder="Book Name. Ex: The Great Gatsby"
+                  placeholder="Book Name. Ex: The Little Prince"
                   handleChange={handleChange}
                   handleSearch={handleSearch}
                   search={true}
@@ -158,10 +164,16 @@ export default function Publish() {
         )}
         {step === 2 && (
           <>
+            <Image
+              alt="bookIlustration"
+              src={BookIlustration2}
+              height={200}
+              className={styles.bookIlustration2}
+            />
             <div className={styles.backButtonTitleContainer}>
               <ArrowLeftCircleIcon
                 className={styles.backButtonIcon}
-                onClick={() => setStep(1)}
+                onClick={handleStepBack}
               />
               <h1 className={styles.title}>Find your book edition</h1>
             </div>
@@ -179,7 +191,7 @@ export default function Publish() {
             <div className={styles.backButtonTitleContainer}>
               <ArrowLeftCircleIcon
                 className={styles.backButtonIcon}
-                onClick={() => setStep(2)}
+                onClick={handleStepBack}
               />
               <h1 className={styles.title}>Time to set a price</h1>
             </div>

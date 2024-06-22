@@ -2,7 +2,6 @@
   display: flex;
   min-height: 100vh;
   justify-content: center;
-  align-items: center;
   padding-top: 72px;
   padding-bottom: 72px;
 }
@@ -13,13 +12,13 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-top: 24px;
 }
 
 .backButtonTitleContainer {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
+  margin: 0;
 }
 
 .backButtonIcon {
@@ -27,6 +26,7 @@
   color: #1e608e;
   height: 32px;
   cursor: pointer;
+  margin-top: 4px;
 }
 
 .title {
@@ -46,7 +46,7 @@
   color: #1e608e;
   font-family: "Oswald", sans-serif;
   margin: 0;
-  margin-bottom: 48px;
+  margin-bottom: 24px;
 }
 
 .infoContainer {
@@ -59,9 +59,14 @@
   display: flex;
   width: max-content;
   padding: 36px;
-  background: rgb(175, 206, 228);
+  background: rgb(185, 217, 241, 0.8);
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
+  border-radius: 8px;
   gap: 24px;
+}
+
+.bookIlustration2 {
+  margin-top: 48px;
+  margin-bottom: 24px;
 }
