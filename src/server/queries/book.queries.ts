@@ -206,7 +206,7 @@ export async function getBookByNameService(title: String) {
 }
 
 
-export async function getBooksByGenreService(generos:String) 
+export async function getBooksByGenreService(generos : String) 
 {
     try{
 
@@ -224,7 +224,10 @@ export async function getBooksByGenreService(generos:String)
 
         const books = await prisma.libro_Genero.findMany({
            where: {
-               ID_GENERO: parseInt(genreIds.toString()),
+               ID_GENERO: {
+
+                in: genreIds,
+            },
            },
            select:{
                ID_LIBRO:true
@@ -243,8 +246,12 @@ export async function getBooksByGenreService(generos:String)
         })
         return requestedBooks;
     }
-    catch (error:any){
-        throw new Error(error.message)
+    catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      } else {
+        throw new Error("An unknown error occurred.");
+      }
     }
 }
 // add copies
