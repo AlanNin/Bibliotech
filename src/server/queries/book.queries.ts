@@ -85,7 +85,10 @@ export async function createBook(
           where: { NOMBRE_GENERO: genre },
         });
       } catch (error) {
-        return "This genre is not allowed or was not found";
+        return {
+          success: false,
+          response: "This genre is not allowed or was not found",
+        };
       }
 
       if (!existingGenre) {
