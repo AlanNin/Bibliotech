@@ -31,10 +31,7 @@ export const PriceModule: React.FC<PriceProps> = ({
     (selectedBook.author_name && selectedBook?.author_name[0]) || "";
   const editorial =
     (selectedBook.publishers && selectedBook?.publishers[0]) || "";
-  const edition_date =
-    (typeof selectedBook.publish_date === "string" &&
-      selectedBook.publish_date.split(" ").pop()) ||
-    "";
+  const edition_date = selectedBook.publish_date;
   const cover = selectedBook?.covers
     ? "https://covers.openlibrary.org/b/id/" + selectedBook.covers[0] + "-L.jpg"
     : selectedBook.cover_i
@@ -82,21 +79,25 @@ export const PriceModule: React.FC<PriceProps> = ({
   };
 
   const handleButtonClick = () => {
-    if (isbnExists) {
-      handleAddCopies(isbn, inputs.quantity);
-    } else {
-      handlePublish(
-        isbn,
-        title,
-        author,
-        editorial,
-        edition_date,
-        cover,
-        rating,
-        physical_format,
-        inputs.price,
-        inputs.quantity
-      );
+    if (inputs.quantity > 0) {
+      if (isbnExists) {
+        handleAddCopies(isbn, inputs.quantity);
+      } else {
+        if (inputs.price > 0) {
+          handlePublish(
+            isbn,
+            title,
+            author,
+            editorial,
+            edition_date,
+            cover,
+            rating,
+            physical_format,
+            inputs.price,
+            inputs.quantity
+          );
+        }
+      }
     }
   };
 

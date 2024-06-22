@@ -6,7 +6,7 @@
 .inputLabel {
   font-size: 16px;
   font-weight: 400;
-  color: #1e608e;
+  color: black;
   font-family: "Oswald", sans-serif;
   margin-bottom: 8px;
 }
@@ -17,14 +17,14 @@
   padding: 0 12px;
   font-size: 16px;
   font-weight: 300;
-  color: white;
-  background-color: rgb(149, 188, 214);
+  color: black;
+  background-color: rgb(168, 168, 168);
   border: none;
   border-radius: 4px;
   font-family: "Oswald", sans-serif;
 
   &&::placeholder {
-    color: white;
+    color: black;
     font-family: "Oswald", sans-serif;
     font-size: 16px;
     font-weight: 300;
@@ -47,11 +47,12 @@
   height: max-content;
   cursor: pointer;
   font-size: 16px;
-  font-weight: 300;
-  color: white;
-  background-color: #136caa;
+  font-weight: 400;
+  color: black;
+  background-color: rgb(168, 168, 168);
   border: none;
   border-radius: 4px;
   font-family: "Oswald", sans-serif;
   padding: 4px 10px;
+  padding-bottom: 6px;
 }
