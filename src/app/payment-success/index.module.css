@@ -1,0 +1,56 @@
+.main {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  padding-top: 72px;
+  padding-bottom: 72px;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  height: fit-content;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 48px;
+  margin-top: -70px;
+}
+
+.checkCircleIcon {
+  color: rgb(0, 128, 0);
+}
+
+.title {
+  margin: 0;
+  line-height: 1.15;
+  font-family: "Oswald", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+.homeButton {
+  color: white;
+  width: 100%;
+  padding: 14px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  margin-top: 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 400px;
+  font-family: "Oswald", sans-serif;
+  background-color: #58a9e2;
+  background-image: linear-gradient(to left, #58a9e2, #6fc2f1);
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #4b8ac8;
+    background-image: none;
+  }
+}

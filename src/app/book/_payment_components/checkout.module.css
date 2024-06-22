@@ -1,0 +1,85 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form {
+  background-color: white;
+  padding: 32px;
+  padding-bottom: 38px;
+  border-radius: 0.375rem;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.paymentDiv {
+  display: inline-block;
+  height: 2rem;
+  width: 2rem;
+  animation: spin 1.5s linear infinite;
+  border-radius: 9999px;
+  border-width: 4px;
+  border-style: solid;
+  border-color: currentColor;
+  border-color: transparent;
+  position: relative;
+  top: -0.125em;
+  color: var(--text-surface);
+}
+
+.paymentDiv::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  border: 0;
+  padding: 0;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.paymentButton {
+  color: white;
+  width: 100%;
+  padding: 14px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  margin-top: 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 400px;
+  font-family: "Oswald", sans-serif;
+  background-color: #58a9e2;
+  background-image: linear-gradient(to left, #58a9e2, #6fc2f1);
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #4b8ac8;
+    background-image: none;
+  }
+}
+
+.paymentButton:disabled {
+  opacity: 0.5;
+}
+
+.paymentButton:disabled:hover {
+  animation: none;
+}
+
+.loading {
+  position: absolute; /* !absolute in Tailwind */
+  margin: -1px; /* !-m-px in Tailwind */
+  height: 1px; /* !h-px in Tailwind */
+  width: 1px; /* !w-px in Tailwind */
+  overflow: hidden; /* !overflow-hidden in Tailwind */
+  white-space: nowrap; /* !whitespace-nowrap in Tailwind */
+  border: 0; /* !border-0 in Tailwind */
+  padding: 0; /* !p-0 in Tailwind */
+  clip: rect(0 0 0 0); /* ![clip:rect(0,0,0,0)] in Tailwind */
+}

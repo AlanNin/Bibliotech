@@ -7,8 +7,12 @@ import { useRouter } from "next/navigation";
 import ReactLoading from "react-loading";
 import GoodReadsLogo from "~/../public/assets/GoodreadsLogo.png";
 import Image from "next/image";
+import { useUser } from "@clerk/nextjs";
+import { createPaymentOrder } from "~/server/queries/payment.queries";
 
 export default function Book() {
+  const { user } = useUser();
+  console.log(user);
   const router = useRouter();
   const { isbn } = useParams();
   const [book, setBook] = useState<any>();
@@ -57,6 +61,21 @@ export default function Book() {
     );
   }
 
+  const handleCreatePaymentOrder = async () => {
+    try {
+      const token = await createPaymentOrder(
+        book?.ISBN,
+        quantity,
+        selectedOption
+      );
+      if (token) {
+        router.push(`/payment/${token}`);
+      }
+    } catch (error) {
+      console.log("Error creating payment order:", error);
+    }
+  };
+
   return (
     <>
       {isLoading ? (
@@ -65,142 +84,154 @@ export default function Book() {
         </div>
       ) : (
         <main className={styles.main}>
-          <div className={styles.container}>
-            <img
-              alt="book cover"
-              src={book?.IMAGEURL}
-              className={styles.cover}
-            />
-            <div className={styles.bookInfo}>
-              <h1 className={styles.title}>
-                {book?.TITULO}{" "}
-                <span className={styles.bookType}>({tipo_tapa})</span>
-              </h1>
-              <h1 className={styles.AuthorEditorialText}>
-                By
-                <a className={styles.AuthorEditorialNameSpan}>
-                  {" "}
-                  {book?.AUTOR}{" "}
-                </a>
-                <span className={styles.AuthorEditorialJobSpan}>(Author)</span>{" "}
-                &{" "}
-                <span className={styles.AuthorEditorialNameSpan}>
-                  {book?.EDITORIAL}
-                </span>{" "}
-                <span className={styles.AuthorEditorialJobSpan}>
-                  (Editorial)
-                </span>
-              </h1>
-
-              {book?.CALIFICACION > 0 ? (
-                <h1 className={styles.rating}>
-                  {Array.from({ length: 5 }, (_, index) => (
-                    <span
-                      key={index}
-                      className={`${styles.star} ${
-                        index < Math.floor(book?.CALIFICACION)
-                          ? styles.yellowStar
-                          : styles.greyStar
-                      }`}
-                    >
-                      &#9733;
-                    </span>
-                  ))}{" "}
-                  {parseFloat(book.CALIFICACION)
-                    .toFixed(2)
-                    .replace(/\.?0*$/, "")}{" "}
-                  Stars - OpenLibrary Community
+          <div className={styles.wrapper}>
+            <div className={styles.container}>
+              <img
+                alt="book cover"
+                src={book?.IMAGEURL}
+                className={styles.cover}
+              />
+              <div className={styles.bookInfo}>
+                <h1 className={styles.title}>
+                  {book?.TITULO}{" "}
+                  <span className={styles.bookType}>({tipo_tapa})</span>
                 </h1>
-              ) : (
-                <h1 className={styles.rating}>No rating found for this book</h1>
-              )}
-
-              <div className={styles.year}>
-                First published on {book?.FECHA_EDICION}
-              </div>
-
-              <div className={styles.bookGenresContainer}>
-                <span className={styles.genresLabel}>Genres:</span>
-                {book?.genres?.slice(0, 15).map((genre: any, index: number) => (
-                  <span key={index} className={styles.genre}>
-                    {genre.NOMBRE_GENERO}
-                  </span>
-                ))}
-              </div>
-
-              <button
-                className={styles.goodreadsButton}
-                onClick={() => {
-                  router.push(
-                    `https://www.goodreads.com/book/isbn/${book?.ISBN}`
-                  );
-                }}
-              >
-                Find this book on Goodreads{" "}
-                <Image
-                  src={GoodReadsLogo}
-                  alt="Goodreads Logo"
-                  width={24}
-                  height={24}
-                />
-              </button>
-            </div>
-            <div className={styles.paymentInfoContainer}>
-              <div className={styles.shippementOptionContainer}>
-                <button
-                  className={`${styles.shippementOptionButton} ${
-                    selectedOption === "Delivery" ? styles.selected : ""
-                  }`}
-                  onClick={() => setSelectedOption("Delivery")}
-                >
-                  Delivery
-                </button>
-                <button
-                  className={`${styles.shippementOptionButton} ${
-                    selectedOption === "Pickup" ? styles.selected : ""
-                  }`}
-                  onClick={() => setSelectedOption("Pickup")}
-                >
-                  Pickup
-                </button>
-              </div>
-              <div className={styles.priceContainer}>
-                <div className={styles.price}>
-                  <span className={styles.priceIcon}>$</span>
-                  <span className={styles.priceLabel}>
-                    {getPriceInteger(book?.PRECIO)}
-                  </span>
-                  <span className={styles.priceCentsLabel}>
-                    {getPriceCents(book?.PRECIO)}
-                  </span>
-                  <span className={styles.priceRD}>
-                    (RD: {formatPriceToRD(book?.PRECIO || 0)})
-                  </span>
-                </div>
-
-                <h1 className={styles.deliveryLabel}>
-                  Will be delivered on
-                  <span className={styles.deliveryDate}>
+                <h1 className={styles.AuthorEditorialText}>
+                  By
+                  <a className={styles.AuthorEditorialNameSpan}>
                     {" "}
-                    Monday, June 2024
+                    {book?.AUTOR}{" "}
+                  </a>
+                  <span className={styles.AuthorEditorialJobSpan}>
+                    (Author)
+                  </span>{" "}
+                  &{" "}
+                  <span className={styles.AuthorEditorialNameSpan}>
+                    {book?.EDITORIAL}
+                  </span>{" "}
+                  <span className={styles.AuthorEditorialJobSpan}>
+                    (Editorial)
                   </span>
                 </h1>
 
-                <h1 className={styles.stock}>In Stock</h1>
-                <h1 className={styles.discount}>Buy 4 or more, save 5%</h1>
+                {book?.CALIFICACION > 0 ? (
+                  <h1 className={styles.rating}>
+                    {Array.from({ length: 5 }, (_, index) => (
+                      <span
+                        key={index}
+                        className={`${styles.star} ${
+                          index < Math.floor(book?.CALIFICACION)
+                            ? styles.yellowStar
+                            : styles.greyStar
+                        }`}
+                      >
+                        &#9733;
+                      </span>
+                    ))}{" "}
+                    {parseFloat(book.CALIFICACION)
+                      .toFixed(2)
+                      .replace(/\.?0*$/, "")}{" "}
+                    Stars - OpenLibrary Community
+                  </h1>
+                ) : (
+                  <h1 className={styles.rating}>
+                    No rating found for this book
+                  </h1>
+                )}
 
-                <div className={styles.quantityContainer}>
-                  <h1 className={styles.quantityLabel}>Quantity:</h1>
-                  <select
-                    value={quantity}
-                    onChange={handleQuantityChange}
-                    className={styles.quantitySelect}
-                  >
-                    {quantityOptions}
-                  </select>
+                <div className={styles.year}>
+                  First published on {book?.FECHA_EDICION}
                 </div>
 
-                <button className={styles.buyButton}> Buy Now</button>
+                <div className={styles.bookGenresContainer}>
+                  <span className={styles.genresLabel}>Genres:</span>
+                  {book?.genres
+                    ?.slice(0, 10)
+                    .map((genre: any, index: number) => (
+                      <span key={index} className={styles.genre}>
+                        {genre.NOMBRE_GENERO}
+                      </span>
+                    ))}
+                </div>
+
+                <button
+                  className={styles.goodreadsButton}
+                  onClick={() => {
+                    router.push(
+                      `https://www.goodreads.com/book/isbn/${book?.ISBN}`
+                    );
+                  }}
+                >
+                  Find this book on Goodreads{" "}
+                  <Image
+                    src={GoodReadsLogo}
+                    alt="Goodreads Logo"
+                    width={24}
+                    height={24}
+                  />
+                </button>
+              </div>
+              <div className={styles.paymentInfoContainer}>
+                <div className={styles.shippementOptionContainer}>
+                  <button
+                    className={`${styles.shippementOptionButton} ${
+                      selectedOption === "Delivery" ? styles.selected : ""
+                    }`}
+                    onClick={() => setSelectedOption("Delivery")}
+                  >
+                    Delivery
+                  </button>
+                  <button
+                    className={`${styles.shippementOptionButton} ${
+                      selectedOption === "Pickup" ? styles.selected : ""
+                    }`}
+                    onClick={() => setSelectedOption("Pickup")}
+                  >
+                    Pickup
+                  </button>
+                </div>
+                <div className={styles.priceContainer}>
+                  <div className={styles.price}>
+                    <span className={styles.priceIcon}>$</span>
+                    <span className={styles.priceLabel}>
+                      {getPriceInteger(book?.PRECIO)}
+                    </span>
+                    <span className={styles.priceCentsLabel}>
+                      {getPriceCents(book?.PRECIO)}
+                    </span>
+                    <span className={styles.priceRD}>
+                      (RD: {formatPriceToRD(book?.PRECIO || 0)})
+                    </span>
+                  </div>
+
+                  <h1 className={styles.deliveryLabel}>
+                    Will be delivered on
+                    <span className={styles.deliveryDate}>
+                      {" "}
+                      Monday, June 2024
+                    </span>
+                  </h1>
+
+                  <h1 className={styles.stock}>In Stock</h1>
+                  <h1 className={styles.discount}>Buy 4 or more, save 5%</h1>
+
+                  <div className={styles.quantityContainer}>
+                    <h1 className={styles.quantityLabel}>Quantity:</h1>
+                    <select
+                      value={quantity}
+                      onChange={handleQuantityChange}
+                      className={styles.quantitySelect}
+                    >
+                      {quantityOptions}
+                    </select>
+                  </div>
+                  <button
+                    className={styles.buyButton}
+                    onClick={handleCreatePaymentOrder}
+                  >
+                    Buy Now
+                  </button>
+                </div>
               </div>
             </div>
           </div>
