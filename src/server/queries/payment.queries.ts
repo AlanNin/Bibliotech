@@ -1,5 +1,6 @@
 "use server";
 import jwt from "jsonwebtoken";
+import { auth } from "@clerk/nextjs/server";
 
 export async function createPaymentOrder(
   isbn: string,
@@ -7,8 +8,10 @@ export async function createPaymentOrder(
   selectedOption: string
 ) {
   try {
+    const { userId } = auth();
     const token = jwt.sign(
       {
+        userId,
         isbn,
         quantity,
         shippment: selectedOption,

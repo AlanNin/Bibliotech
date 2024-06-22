@@ -9,26 +9,45 @@ import { Payment } from "~/app/book/_payment_components/payment";
 import { getBookByISBN } from "~/server/queries/book.queries";
 import AppLogo from "~/../public/assets/xdLogo.png";
 import Image from "next/image";
+import { useUser } from "@clerk/nextjs";
 
 export default function Book() {
   const router = useRouter();
+  const { user, isLoaded } = useUser();
   const { token } = useParams();
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [book, setBook] = useState<any>();
-  const [data, setData] = useState<any>();
+  const [book, setBook] = useState<any>(null);
+  const [data, setData] = useState<any>(null);
+
   useEffect(() => {
-    setIsLoading(true);
-    if (typeof token === "string") {
+    if (!token) {
+      router.push("/");
+    }
+  }, [token, router]);
+
+  useEffect(() => {
+    if (isLoaded && user && typeof token === "string") {
       const fetchPaymentOrder = async () => {
-        const response = await getPaymentOrder(token);
-        setData(response);
-        const bookResponse = await getBookByISBN(response.isbn);
-        setBook(bookResponse);
-        setIsLoading(false);
+        try {
+          setIsLoading(true);
+          const response = await getPaymentOrder(token);
+          if (response && response.userId === user.id) {
+            setData(response);
+            const bookResponse = await getBookByISBN(response.isbn);
+            setBook(bookResponse);
+          } else {
+            router.push("/");
+          }
+        } catch (error) {
+          console.error("Error fetching payment order:", error);
+          router.push("/");
+        } finally {
+          setIsLoading(false);
+        }
       };
       fetchPaymentOrder();
     }
-  }, [token]);
+  }, [token, user, isLoaded]);
 
   return (
     <>
@@ -38,25 +57,35 @@ export default function Book() {
         </div>
       ) : (
         <main className={styles.main}>
-          <div className={styles.container}>
-            <div className={styles.productInfoDiv}>
-              <div className={styles.LogoDiv}>
-                <Image src={AppLogo} alt="xdLogo" className={styles.Logo} />
-                <h1 className={styles.appName}> Bibliotech </h1>
+          {user?.id === data?.userId && (
+            <div className={styles.container}>
+              <div className={styles.productInfoDiv}>
+                <div className={styles.LogoDiv}>
+                  <Image src={AppLogo} alt="xdLogo" className={styles.Logo} />
+                  <h1 className={styles.appName}>Bibliotech</h1>
+                </div>
+                <h1 className={styles.bookTitle}>
+                  {book?.TITULO} x {data?.quantity}
+                </h1>
+                <h1 className={styles.bookTitle}>
+                  Shippment: {data?.shippment}
+                </h1>
+
+                <h1 className={styles.bookPrice}>
+                  ${formatPrice(book?.PRECIO * data?.quantity)}
+                </h1>
+
+                {book?.IMAGEURL && (
+                  <img
+                    className={styles.bookImage}
+                    src={book?.IMAGEURL}
+                    alt={book?.TITULO}
+                  />
+                )}
               </div>
-              <h1 className={styles.bookTitle}>
-                {book.TITULO} x {data.quantity}
-              </h1>
-              <h1 className={styles.bookTitle}>Shippment: {data.shippment}</h1>
-
-              <h1 className={styles.bookPrice}>
-                ${formatPrice(book.PRECIO * data.quantity)}
-              </h1>
-
-              <img className={styles.bookImage} src={book?.IMAGEURL} />
+              <Payment amount={book?.PRECIO * data?.quantity} />
             </div>
-            <Payment amount={book?.PRECIO * data.quantity} />
-          </div>
+          )}
         </main>
       )}
     </>
@@ -64,8 +93,7 @@ export default function Book() {
 }
 
 function formatPrice(number: number): string {
-  const numberString = number.toString();
-  return parseFloat(numberString)
-    .toFixed(2)
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return number
+    .toLocaleString("en-US", { style: "currency", currency: "USD" })
+    .replace("$", "");
 }
