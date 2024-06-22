@@ -1,4 +1,5 @@
 "use server";
+import { get, request } from "node_modules/axios/index.cjs";
 import prisma from "../prismaClient";
 //import bcrypt from "bcrypt";
 //import jwt from "jsonwebtoken";
@@ -181,20 +182,22 @@ export async function getBookByISBN(isbn: string) {
 }
 
 //Getting books by the words on the title
-export async function getBookByNameService(title: String) {
+export async function getBookByNameService(tolook: String) {
   try {
     var requestedBooks = null;
     requestedBooks = await prisma.libro.findMany({
       where: {
         TITULO: {
           //If the title of the book contains the word that the person is sending
-          contains: title.toString(),
+          contains: tolook.toString(),
           mode: "insensitive",
-        },
+        }, 
       },
     });
 
-    console.log(requestedBooks);
+    requestedBooks.push(...await getBooksByGenreService(tolook));
+    
+
     return requestedBooks;
   } catch (error) {
     if (error instanceof Error) {
