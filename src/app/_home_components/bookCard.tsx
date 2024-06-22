@@ -8,7 +8,7 @@ type BookProps = {
 
 export const BookCard: React.FC<BookProps> = ({ book }) => {
   const router = useRouter();
-  console.log(book);
+  //console.log(book);
   return (
     <div
       className={styles.bookContainer}

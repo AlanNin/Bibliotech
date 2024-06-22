@@ -1,4 +1,5 @@
 "use server";
+import { get, request } from "node_modules/axios/index.cjs";
 import prisma from "../prismaClient";
 //import bcrypt from "bcrypt";
 //import jwt from "jsonwebtoken";
@@ -60,6 +61,7 @@ export async function bookExists(
   }
 }
 
+
 //creating a book
 
 export async function createBook(
@@ -85,10 +87,7 @@ export async function createBook(
           where: { NOMBRE_GENERO: genre },
         });
       } catch (error) {
-        return {
-          success: false,
-          response: "This genre is not allowed or was not found",
-        };
+        return { success: false, response: "This genre is not allowed or was not found" };
       }
 
       if (!existingGenre) {
@@ -128,7 +127,7 @@ export async function createBook(
     } else {
       throw new Error("An unknown error occurred.");
     }
-  }
+  } 
 }
 
 //Getting all of the database books
@@ -170,13 +169,6 @@ export async function getBookByISBN(isbn: string) {
       where: {
         ISBN: isbn,
       },
-      include: {
-        Libro_Genero: {
-          include: {
-            genero: true,
-          },
-        },
-      },
     });
 
     return requestedBook;
@@ -190,20 +182,22 @@ export async function getBookByISBN(isbn: string) {
 }
 
 //Getting books by the words on the title
-export async function getBookByNameService(title: String) {
+export async function getBookByNameService(tolook: String) {
   try {
     var requestedBooks = null;
     requestedBooks = await prisma.libro.findMany({
       where: {
         TITULO: {
           //If the title of the book contains the word that the person is sending
-          contains: title.toString(),
+          contains: tolook.toString(),
           mode: "insensitive",
-        },
+        }, 
       },
     });
 
-    console.log(requestedBooks);
+    requestedBooks.push(...await getBooksByGenreService(tolook));
+    
+
     return requestedBooks;
   } catch (error) {
     if (error instanceof Error) {
@@ -214,39 +208,55 @@ export async function getBookByNameService(title: String) {
   }
 }
 
-// export async function getBooksByGenreService(genero:String)
-// {
-//     try{
 
-//         const genre = await prisma.genero.findMany({
-//                 where:{
-//                     NOMBRE_GENERO: genero.toString()
-//                 },
-//                 select:{
-//                     ID_GENERO:true
-//                 }
-//             }
-//         )
+export async function getBooksByGenreService(generos : String) 
+{
+    try{
 
-//         console.log(genre.json.toString())
-//         console.log(genre);
-//         //var numGenre = Number(genre);
-//         //const books = await prisma.libro_Genero.findMany({
-//          //   where: {
-//          //       ID_GENERO: numGenre
-//          //   },
-//          //   select:{
-//          //       ID_LIBRO:true
-//          //   }
-//        // })
+        const genre = await prisma.genero.findMany({
+                where:{
+                    NOMBRE_GENERO: generos.toString()
+                },
+                select:{
+                    ID_GENERO:true
+                }
+            }
+        )
 
-//         return genre;
-//     }
-//     catch (error:any){
-//         throw new Error(error.message)
-//     }
-// }
+        const genreIds = genre.map(g => g.ID_GENERO);
 
+        const books = await prisma.libro_Genero.findMany({
+           where: {
+               ID_GENERO: {
+
+                in: genreIds,
+            },
+           },
+           select:{
+               ID_LIBRO:true
+           }
+       })
+        
+       const librosIds = books.map(g => g.ID_LIBRO);
+    
+       const requestedBooks = await prisma.libro.findMany({
+            where: {
+                ID_LIBRO:{
+
+                    in: librosIds,
+                }
+            },
+        })
+        return requestedBooks;
+    }
+    catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      } else {
+        throw new Error("An unknown error occurred.");
+      }
+    }
+}
 // add copies
 export async function addCopies(isbn: string, cantidad_libros: number) {
   try {
