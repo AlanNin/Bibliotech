@@ -15,7 +15,8 @@ type PriceProps = {
     rating: number,
     physical_format: string | "",
     price: number,
-    quantity: number
+    quantity: number,
+    genres: any[]
   ) => void;
   handleAddCopies: (isbn: string, quantity: number) => void;
 };
@@ -25,7 +26,6 @@ export const PriceModule: React.FC<PriceProps> = ({
   handlePublish,
   handleAddCopies,
 }) => {
-  const asdasd = selectedBook?.subject[0];
   const isbn = selectedBook?.isbn_13;
   const title = selectedBook?.title;
   const author =
@@ -40,6 +40,7 @@ export const PriceModule: React.FC<PriceProps> = ({
     : "https://dummyimage.com/180x190/dedede/3b3b3b&text=Image+Not+Available";
   const rating = selectedBook?.ratings_average?.toFixed(1) || 0.0;
   const physical_format = selectedBook?.physical_format || "";
+  const genres = selectedBook?.subject;
 
   const [isbnExists, setIsbnExists] = useState<boolean>(false);
 
@@ -95,7 +96,8 @@ export const PriceModule: React.FC<PriceProps> = ({
             rating,
             physical_format,
             inputs.price,
-            inputs.quantity
+            inputs.quantity,
+            genres
           );
         }
       }

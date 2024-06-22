@@ -86,7 +86,7 @@ export async function createBook(
           where: { NOMBRE_GENERO: genre },
         });
       } catch (error) {
-        return "This genre is not allowed or was not found";
+        return { success: false, response: "This genre is not allowed or was not found" };
       }
 
       if (!existingGenre) {
@@ -205,39 +205,48 @@ export async function getBookByNameService(title: String) {
   }
 }
 
-// export async function getBooksByGenreService(genero:String) 
-// {
-//     try{
 
-//         const genre = await prisma.genero.findMany({
-//                 where:{
-//                     NOMBRE_GENERO: genero.toString()
-//                 },
-//                 select:{
-//                     ID_GENERO:true
-//                 }
-//             }
-//         )
-        
-//         console.log(genre.json.toString())
-//         console.log(genre);
-//         //var numGenre = Number(genre);
-//         //const books = await prisma.libro_Genero.findMany({
-//          //   where: {
-//          //       ID_GENERO: numGenre
-//          //   },
-//          //   select:{
-//          //       ID_LIBRO:true
-//          //   }
-//        // })
-        
-//         return genre;
-//     }
-//     catch (error:any){
-//         throw new Error(error.message)
-//     }
-// }
+export async function getBooksByGenreService(generos:String) 
+{
+    try{
 
+        const genre = await prisma.genero.findMany({
+                where:{
+                    NOMBRE_GENERO: generos.toString()
+                },
+                select:{
+                    ID_GENERO:true
+                }
+            }
+        )
+
+        const genreIds = genre.map(g => g.ID_GENERO);
+
+        const books = await prisma.libro_Genero.findMany({
+           where: {
+               ID_GENERO: parseInt(genreIds.toString()),
+           },
+           select:{
+               ID_LIBRO:true
+           }
+       })
+        
+       const librosIds = books.map(g => g.ID_LIBRO);
+    
+       const requestedBooks = await prisma.libro.findMany({
+            where: {
+                ID_LIBRO:{
+
+                    in: librosIds,
+                }
+            },
+        })
+        return requestedBooks;
+    }
+    catch (error:any){
+        throw new Error(error.message)
+    }
+}
 // add copies
 export async function addCopies(isbn: string, cantidad_libros: number) {
   try {

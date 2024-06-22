@@ -77,7 +77,8 @@ export default function Publish() {
     rating: number,
     physical_format: string,
     price: number,
-    quantity: number
+    quantity: number,
+    genres: any[]
   ) => {
     if (selectedBook) {
       const response = await createBook(
@@ -90,7 +91,8 @@ export default function Publish() {
         rating,
         physical_format,
         price,
-        quantity
+        quantity,
+        genres
       );
       if (response.success === true) {
         setShowBooks(false);
