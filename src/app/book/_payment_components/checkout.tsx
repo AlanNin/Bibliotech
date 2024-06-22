@@ -86,7 +86,7 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
       {errorMessage && <div>{errorMessage}</div>}
 
       <button disabled={!stripe || loading} className={styles.paymentButton}>
-        {!loading ? `Proceed to payment` : "Processing..."}
+        {!loading ? `Pay Now` : "Processing..."}
       </button>
     </form>
   );
