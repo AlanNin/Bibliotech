@@ -23,7 +23,15 @@ export default function Book() {
     const getBookInfo = async () => {
       if (typeof isbn === "string") {
         const response = await getBookByISBN(isbn);
-        setBook(response);
+        if (response) {
+          const genres = response.Libro_Genero.map(
+            (libroGenero) => libroGenero.genero
+          );
+          setBook({
+            ...response,
+            genres,
+          });
+        }
       } else {
         console.error("Invalid isbn type:", isbn);
       }
@@ -31,27 +39,6 @@ export default function Book() {
     };
     getBookInfo();
   }, [isbn]);
-
-  const Genres = [
-    "Action",
-    "Adventure",
-    "Animation",
-    "Biography",
-    "Comedy",
-    "Crime",
-    "Drama",
-    "Family",
-    "Fantasy",
-    "History",
-    "Horror",
-    "Music",
-    "Mystery",
-    "Romance",
-    "Science Fiction",
-    "Thriller",
-    "War",
-    "Western",
-  ];
 
   const tipo_tapa = book?.TIPO_TAPA === "hardcover" ? "Hardcover" : "Paperback";
 
@@ -154,16 +141,18 @@ export default function Book() {
                   First published on {book?.FECHA_EDICION}
                 </div>
 
-                <div className={styles.bookGenresContainer}>
-                  <span className={styles.genresLabel}>Genres:</span>
-                  {book?.genres
-                    ?.slice(0, 15)
-                    .map((genre: any, index: number) => (
-                      <span key={index} className={styles.genre}>
-                        {genre.NOMBRE_GENERO}
-                      </span>
-                    ))}
-                </div>
+                {book?.genres?.length > 0 && (
+                  <div className={styles.bookGenresContainer}>
+                    <span className={styles.genresLabel}>Genres:</span>
+                    {book?.genres
+                      ?.slice(0, 10)
+                      .map((genre: any, index: number) => (
+                        <span key={index} className={styles.genre}>
+                          {genre.NOMBRE_GENERO}
+                        </span>
+                      ))}
+                  </div>
+                )}
 
                 <button
                   className={styles.goodreadsButton}

@@ -1,6 +1,6 @@
 "use client";
 import styles from "./index.module.css";
-import { getAllBooks, getBooksByGenreService } from "~/server/queries/book.queries";
+import { getBooksByGenreService } from "~/server/queries/book.queries";
 import { useEffect, useState } from "react";
 import { BookCard } from "~/app/_home_components/bookCard";
 import ReactLoading from "react-loading";
@@ -14,19 +14,17 @@ export default function Home() {
   useEffect(() => {
     setIsLoading(true);
     const fetchBooks = async () => {
-        if (typeof genre === "string") {
-            const response = await getBooksByGenreService(genre);
-            
-            setBooks(response);
-            
-          } else {
-            console.error("Invalid genre:", genre);
-          }
-          setIsLoading(false);
+      if (typeof genre === "string") {
+        const response = await getBooksByGenreService(genre);
+
+        setBooks(response);
+      } else {
+        console.error("Invalid genre:", genre);
+      }
+      setIsLoading(false);
     };
 
     fetchBooks();
-    
   }, [genre]);
 
   return (

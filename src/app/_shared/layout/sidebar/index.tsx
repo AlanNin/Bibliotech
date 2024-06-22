@@ -11,8 +11,6 @@ import { Section, Item } from "./section";
 import { useEffect, useRef, useState } from "react";
 import { SignInButton, SignedIn, SignedOut, useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
-import { getBooksByGenreService } from "~/server/queries/book.queries";
-import { get } from "node_modules/axios/index.cjs";
 
 interface SidebarProps {
   toggleSidebar: () => void;
@@ -78,14 +76,62 @@ const Sidebar: React.FC<SidebarProps> = ({ toggleSidebar }) => {
           )}
           <div className={styles.sectionItem}>
             <Section Section="Categories" Icon={TagIcon} />
-            <Item Item="Action" handleClick={() => router.push("/categories/Action")} />
-            <Item Item="Fiction" handleClick={() => router.push("/categories/Fiction")} />
-            <Item Item="Thriller" handleClick={() => router.push("/categories/Thriller")} />
-            <Item Item="Comedy" handleClick={() => router.push("/categories/Comedy")} />
-            <Item Item="Romance" handleClick={() => router.push("/categories/Romance")} />
-            <Item Item="Mistery" handleClick={() => router.push("/categories/Mistery")} />
-            <Item Item="Comics" handleClick={() => router.push("/categories/Comics")} />
-            <Item Item="Science Fiction" handleClick={() => router.push("/categories/Science Fiction")} />
+            <Item
+              Item="Action"
+              handleClick={() => {
+                router.push("/categories/action");
+                closeSidebar();
+              }}
+            />
+            <Item
+              Item="Fiction"
+              handleClick={() => {
+                router.push("/categories/fiction");
+                closeSidebar();
+              }}
+            />
+            <Item
+              Item="Thriller"
+              handleClick={() => {
+                router.push("/categories/thriller");
+                closeSidebar();
+              }}
+            />
+            <Item
+              Item="Comedy"
+              handleClick={() => {
+                router.push("/categories/comedy");
+                closeSidebar();
+              }}
+            />
+            <Item
+              Item="Romance"
+              handleClick={() => {
+                router.push("/categories/romance");
+                closeSidebar();
+              }}
+            />
+            <Item
+              Item="Mistery"
+              handleClick={() => {
+                router.push("/categories/mistery");
+                closeSidebar();
+              }}
+            />
+            <Item
+              Item="Comics"
+              handleClick={() => {
+                router.push("/categories/comics");
+                closeSidebar();
+              }}
+            />
+            <Item
+              Item="Science Fiction"
+              handleClick={() => {
+                router.push("/categories/science-fiction");
+                closeSidebar();
+              }}
+            />
           </div>
           <div className={styles.sectionItem}>
             <Section Section="Trending" Icon={ShoppingBagIcon} />

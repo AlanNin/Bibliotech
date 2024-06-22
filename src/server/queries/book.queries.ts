@@ -61,7 +61,6 @@ export async function bookExists(
   }
 }
 
-
 //creating a book
 
 export async function createBook(
@@ -87,7 +86,10 @@ export async function createBook(
           where: { NOMBRE_GENERO: genre },
         });
       } catch (error) {
-        return { success: false, response: "This genre is not allowed or was not found" };
+        return {
+          success: false,
+          response: "This genre is not allowed or was not found",
+        };
       }
 
       if (!existingGenre) {
@@ -127,7 +129,7 @@ export async function createBook(
     } else {
       throw new Error("An unknown error occurred.");
     }
-  } 
+  }
 }
 
 //Getting all of the database books
@@ -169,6 +171,13 @@ export async function getBookByISBN(isbn: string) {
       where: {
         ISBN: isbn,
       },
+      include: {
+        Libro_Genero: {
+          include: {
+            genero: true,
+          },
+        },
+      },
     });
 
     return requestedBook;
@@ -188,15 +197,13 @@ export async function getBookByNameService(tolook: String) {
     requestedBooks = await prisma.libro.findMany({
       where: {
         TITULO: {
-          //If the title of the book contains the word that the person is sending
           contains: tolook.toString(),
           mode: "insensitive",
-        }, 
+        },
       },
     });
 
-    requestedBooks.push(...await getBooksByGenreService(tolook));
-    
+    requestedBooks.push(...(await getBooksByGenreService(tolook)));
 
     return requestedBooks;
   } catch (error) {
@@ -208,54 +215,50 @@ export async function getBookByNameService(tolook: String) {
   }
 }
 
+export async function getBooksByGenreService(generos: String) {
+  try {
+    const genre = await prisma.genero.findMany({
+      where: {
+        NOMBRE_GENERO: {
+          equals: generos.toString(),
+          mode: "insensitive",
+        },
+      },
+      select: {
+        ID_GENERO: true,
+      },
+    });
 
-export async function getBooksByGenreService(generos : String) 
-{
-    try{
+    const genreIds = genre.map((g) => g.ID_GENERO);
 
-        const genre = await prisma.genero.findMany({
-                where:{
-                    NOMBRE_GENERO: generos.toString()
-                },
-                select:{
-                    ID_GENERO:true
-                }
-            }
-        )
+    const books = await prisma.libro_Genero.findMany({
+      where: {
+        ID_GENERO: {
+          in: genreIds,
+        },
+      },
+      select: {
+        ID_LIBRO: true,
+      },
+    });
 
-        const genreIds = genre.map(g => g.ID_GENERO);
+    const librosIds = books.map((g) => g.ID_LIBRO);
 
-        const books = await prisma.libro_Genero.findMany({
-           where: {
-               ID_GENERO: {
-
-                in: genreIds,
-            },
-           },
-           select:{
-               ID_LIBRO:true
-           }
-       })
-        
-       const librosIds = books.map(g => g.ID_LIBRO);
-    
-       const requestedBooks = await prisma.libro.findMany({
-            where: {
-                ID_LIBRO:{
-
-                    in: librosIds,
-                }
-            },
-        })
-        return requestedBooks;
+    const requestedBooks = await prisma.libro.findMany({
+      where: {
+        ID_LIBRO: {
+          in: librosIds,
+        },
+      },
+    });
+    return requestedBooks;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("An unknown error occurred.");
     }
-    catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      } else {
-        throw new Error("An unknown error occurred.");
-      }
-    }
+  }
 }
 // add copies
 export async function addCopies(isbn: string, cantidad_libros: number) {

@@ -31,7 +31,7 @@
 
 .cover {
   width: auto;
-  height: 355px;
+  height: 385px;
   object-fit: cover;
   border-radius: 0px;
   border-top-right-radius: 24px;
@@ -42,7 +42,7 @@
 .bookInfo {
   display: flex;
   flex-direction: column;
-  gap: 0px;
+  gap: 2px;
   width: max-content;
 }
 
