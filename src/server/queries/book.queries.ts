@@ -60,7 +60,6 @@ export async function bookExists(
   }
 }
 
-
 //creating a book
 
 export async function createBook(
@@ -126,7 +125,7 @@ export async function createBook(
     } else {
       throw new Error("An unknown error occurred.");
     }
-  } 
+  }
 }
 
 //Getting all of the database books
@@ -168,6 +167,13 @@ export async function getBookByISBN(isbn: string) {
       where: {
         ISBN: isbn,
       },
+      include: {
+        Libro_Genero: {
+          include: {
+            genero: true,
+          },
+        },
+      },
     });
 
     return requestedBook;
@@ -205,7 +211,7 @@ export async function getBookByNameService(title: String) {
   }
 }
 
-// export async function getBooksByGenreService(genero:String) 
+// export async function getBooksByGenreService(genero:String)
 // {
 //     try{
 
@@ -218,7 +224,7 @@ export async function getBookByNameService(title: String) {
 //                 }
 //             }
 //         )
-        
+
 //         console.log(genre.json.toString())
 //         console.log(genre);
 //         //var numGenre = Number(genre);
@@ -230,7 +236,7 @@ export async function getBookByNameService(title: String) {
 //          //       ID_LIBRO:true
 //          //   }
 //        // })
-        
+
 //         return genre;
 //     }
 //     catch (error:any){
