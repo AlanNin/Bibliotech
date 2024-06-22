@@ -60,7 +60,9 @@ export async function bookExists(
   }
 }
 
+
 //creating a book
+
 export async function createBook(
   isbn: string,
   titulo: string,
@@ -71,10 +73,32 @@ export async function createBook(
   calificacion: number,
   tipo_tapa: string,
   precio: number,
-  cantidad_libros: number
+  cantidad_libros: number,
+  genres: string[]
 ) {
   try {
-    //Using prisma to create a book
+    const genreIds: number[] = [];
+
+    for (const genre of genres) {
+      let existingGenre;
+      try {
+        existingGenre = await prisma.genero.findFirst({
+          where: { NOMBRE_GENERO: genre },
+        });
+      } catch (error) {
+        return "This genre is not allowed or was not found";
+      }
+
+      if (!existingGenre) {
+        const createdGenre = await prisma.genero.create({
+          data: { NOMBRE_GENERO: genre },
+        });
+        genreIds.push(createdGenre.ID_GENERO);
+      } else {
+        genreIds.push(existingGenre.ID_GENERO);
+      }
+    }
+
     const createdBook = await prisma.libro.create({
       data: {
         ISBN: String(isbn),
@@ -87,6 +111,11 @@ export async function createBook(
         TIPO_TAPA: tipo_tapa,
         PRECIO: precio,
         CANTIDAD_LIBROS: cantidad_libros,
+        Libro_Genero: {
+          create: genreIds.map((ID_GENERO: number) => ({
+            genero: { connect: { ID_GENERO } },
+          })),
+        },
       },
     });
 
@@ -97,7 +126,7 @@ export async function createBook(
     } else {
       throw new Error("An unknown error occurred.");
     }
-  }
+  } 
 }
 
 //Getting all of the database books
@@ -156,6 +185,39 @@ export async function getBookByNameService(title: String) {
     }
   }
 }
+
+// export async function getBooksByGenreService(genero:String) 
+// {
+//     try{
+
+//         const genre = await prisma.genero.findMany({
+//                 where:{
+//                     NOMBRE_GENERO: genero.toString()
+//                 },
+//                 select:{
+//                     ID_GENERO:true
+//                 }
+//             }
+//         )
+        
+//         console.log(genre.json.toString())
+//         console.log(genre);
+//         //var numGenre = Number(genre);
+//         //const books = await prisma.libro_Genero.findMany({
+//          //   where: {
+//          //       ID_GENERO: numGenre
+//          //   },
+//          //   select:{
+//          //       ID_LIBRO:true
+//          //   }
+//        // })
+        
+//         return genre;
+//     }
+//     catch (error:any){
+//         throw new Error(error.message)
+//     }
+// }
 
 // add copies
 export async function addCopies(isbn: string, cantidad_libros: number) {
