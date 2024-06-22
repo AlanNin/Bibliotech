@@ -25,6 +25,7 @@ export const PriceModule: React.FC<PriceProps> = ({
   handlePublish,
   handleAddCopies,
 }) => {
+  const asdasd = selectedBook?.subject[0];
   const isbn = selectedBook?.isbn_13;
   const title = selectedBook?.title;
   const author =
