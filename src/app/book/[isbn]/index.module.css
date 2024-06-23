@@ -201,6 +201,23 @@
   }
 }
 
+.shippementOptionButtonDisabled {
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0;
+  margin-top: 8px;
+  color: black;
+  font-family: "Oswald", sans-serif;
+  background-color: rgba(160, 160, 160, 0.4);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+  padding: 2px 2px;
+  width: 100%;
+  cursor: not-allowed;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
 .selected {
   background-color: #9ecff3;
   border: 1px solid rgba(0, 0, 0, 0.15);

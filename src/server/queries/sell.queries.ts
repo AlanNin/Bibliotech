@@ -106,7 +106,7 @@ export async function updateSellService(
 }
 
 //Deleting a sell
-export async function deleteSellService(id: number) {
+export async function deleteSell(id: number) {
   try {
     const requestedSell = await prisma.ventas.delete({
       where: { ID_VENTAS: id },

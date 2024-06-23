@@ -9,17 +9,20 @@ import { useEffect, useState } from "react";
 import convertToSubcurrency from "./convertToSubcurrency";
 import { ProcessPaymentIntent } from "~/server/APIs/Stripe.api";
 import ReactLoading from "react-loading";
-import { createSell } from "~/server/queries/sell.queries";
+import { createSell, deleteSell } from "~/server/queries/sell.queries";
+import { useRouter } from "next/navigation";
 
 type CheckOutProps = {
   paymentData: any;
 };
 
 export const CheckoutPage: React.FC<CheckOutProps> = ({ paymentData }) => {
+  const router = useRouter();
   const stripe = useStripe();
   const elements = useElements();
   const [errorMessage, setErrorMessage] = useState<string>();
   const [clientSecret, setClientSecret] = useState("");
+  const [createdSell, setCreatedSell] = useState<any>();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -54,24 +57,8 @@ export const CheckoutPage: React.FC<CheckOutProps> = ({ paymentData }) => {
       return;
     }
 
-    const result = await stripe.confirmPayment({
-      elements,
-      clientSecret,
-      confirmParams: {
-        return_url: `${window.location.origin}/payment-success?amount=${paymentData.total}`,
-      },
-    });
-    console.log(result);
-
-    if (result.error) {
-      // This point is only reached if there's an immediate error when
-      // confirming the payment. Show the error to your customer (for example, payment details incomplete)
-      setErrorMessage(result.error.message);
-    } else {
-      // The payment UI automatically closes with a success animation.
-      // Your customer is redirected to your `return_url`.
-      /*
-      await createSell(
+    try {
+      const sell = await createSell(
         paymentData.shippment,
         paymentData.address,
         paymentData.country,
@@ -81,10 +68,35 @@ export const CheckoutPage: React.FC<CheckOutProps> = ({ paymentData }) => {
         paymentData.iva,
         paymentData.subTotal,
         paymentData.total,
-        "fsa",
+        clientSecret,
         paymentData.bookId
       );
-      */
+
+      setCreatedSell(sell);
+
+      router.push(
+        `${window.location.origin}/payment-success?amount=${paymentData.total}`
+      );
+    } catch (error) {
+      setErrorMessage("Error processing payment");
+    }
+
+    const { error } = await stripe.confirmPayment({
+      elements,
+      clientSecret,
+      confirmParams: {
+        return_url: `${window.location.origin}/payment-success?amount=${paymentData.total}`,
+      },
+    });
+
+    if (error) {
+      // This point is only reached if there's an immediate error when
+      // confirming the payment. Show the error to your customer (for example, payment details incomplete)
+      await deleteSell(createdSell?.ID_VENTAS);
+      setErrorMessage(error.message);
+    } else {
+      // The payment UI automatically closes with a success animation.
+      // Your customer is redirected to your `return_url`.
     }
 
     setLoading(false);

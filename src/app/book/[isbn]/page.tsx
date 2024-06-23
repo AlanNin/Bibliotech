@@ -12,7 +12,6 @@ import { createPaymentOrder } from "~/server/queries/payment.queries";
 
 export default function Book() {
   const { user } = useUser();
-  console.log(user);
   const router = useRouter();
   const { isbn } = useParams();
   const [book, setBook] = useState<any>();
@@ -42,7 +41,7 @@ export default function Book() {
 
   const tipo_tapa = book?.TIPO_TAPA === "hardcover" ? "Hardcover" : "Paperback";
 
-  const [selectedOption, setSelectedOption] = useState<string>("Delivery");
+  const [selectedOption, setSelectedOption] = useState<string>("Pickup");
 
   const handleQuantityChange = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -175,19 +174,19 @@ export default function Book() {
                 <div className={styles.shippementOptionContainer}>
                   <button
                     className={`${styles.shippementOptionButton} ${
-                      selectedOption === "Delivery" ? styles.selected : ""
-                    }`}
-                    onClick={() => setSelectedOption("Delivery")}
-                  >
-                    Delivery
-                  </button>
-                  <button
-                    className={`${styles.shippementOptionButton} ${
                       selectedOption === "Pickup" ? styles.selected : ""
                     }`}
                     onClick={() => setSelectedOption("Pickup")}
                   >
                     Pickup
+                  </button>
+                  <button
+                    className={`${styles.shippementOptionButtonDisabled} ${
+                      selectedOption === "Delivery" ? styles.selected : ""
+                    }`}
+                    // onClick={() => setSelectedOption("Delivery")}
+                  >
+                    Delivery
                   </button>
                 </div>
                 <div className={styles.priceContainer}>
