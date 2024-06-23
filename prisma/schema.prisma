@@ -62,13 +62,16 @@ model Ventas {
   ID_VENTAS       Int      @id @default(autoincrement())
   CANTIDAD_LIBROS Int
   FECHA_HORA      DateTime @default(now()) @db.Timestamp
+  ENVIO           String
+  DIRECCION String?
+  PAIS      String?
+  CIUDAD     String?
+  CODIGO_POSTAL String?
   IMPUESTOS       Decimal  @db.Decimal(10, 2)
   SUBTOTAL        Decimal  @db.Decimal(10, 2)
   TOTAL           Decimal  @db.Decimal(10, 2)
+  ID_USUARIO      String
+  ID_STRIPE       String
   ID_LIBRO    Int  
   libro   Libro   @relation(fields: [ID_LIBRO], references: [ID_LIBRO])
-
-
-  
-  ID_USUARIO      String 
 }
