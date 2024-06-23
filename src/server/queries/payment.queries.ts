@@ -2,6 +2,7 @@
 import jwt from "jsonwebtoken";
 import { auth } from "@clerk/nextjs/server";
 
+// CREATE PAYMENT ORDER AND TOKEN
 export async function createPaymentOrder(
   isbn: string,
   quantity: number,
@@ -28,6 +29,7 @@ export async function createPaymentOrder(
   }
 }
 
+// GET PAYMENT ORDER INFO
 export async function getPaymentOrder(token: string) {
   try {
     const data = jwt.verify(token, process.env.JWT_SECRET || "") as any;

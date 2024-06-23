@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import ReactLoading from "react-loading";
 import { getPaymentOrder } from "~/server/queries/payment.queries";
-import { Payment } from "~/app/book/_payment_components/payment";
+import { Payment } from "~/app/_shared/payment_components/payment";
 import { getBookByISBN } from "~/server/queries/book.queries";
 import AppLogo from "~/../public/assets/xdLogo.png";
 import Image from "next/image";
@@ -49,6 +49,23 @@ export default function Book() {
     }
   }, [token, user, isLoaded]);
 
+  const subTotal = book?.PRECIO * data?.quantity;
+  const iva = subTotal * 0.04;
+  const total = subTotal + iva;
+
+  const paymentData = {
+    shippment: data?.shippment,
+    address: undefined,
+    country: undefined,
+    city: undefined,
+    postalCode: undefined,
+    bookQuantity: data?.quantity,
+    iva: iva,
+    subTotal: subTotal,
+    total: total,
+    bookId: book?.ID_LIBRO,
+  };
+
   return (
     <>
       {isLoading ? (
@@ -64,16 +81,23 @@ export default function Book() {
                   <Image src={AppLogo} alt="xdLogo" className={styles.Logo} />
                   <h1 className={styles.appName}>Bibliotech</h1>
                 </div>
-                <h1 className={styles.bookTitle}>
-                  {book?.TITULO} x {data?.quantity}
-                </h1>
-                <h1 className={styles.bookTitle}>
-                  Shippment: {data?.shippment}
-                </h1>
 
-                <h1 className={styles.bookPrice}>
-                  ${formatPrice(book?.PRECIO * data?.quantity)}
-                </h1>
+                <div className={styles.sellInfo}>
+                  <h1 className={styles.bookTitle}>
+                    {book?.TITULO} x {data?.quantity}
+                  </h1>
+                  <h1 className={styles.bookLabel}>
+                    Shippment: {data?.shippment}
+                  </h1>
+                  <h1 className={styles.bookLabel}>
+                    Subtotal: ${formatPrice(subTotal)}
+                  </h1>
+
+                  <h1 className={styles.bookLabel}>IVA: ${formatPrice(iva)}</h1>
+                </div>
+
+                <h1 className={styles.bookLabelTotal}>Total:</h1>
+                <h1 className={styles.bookPrice}>${formatPrice(total)}</h1>
 
                 {book?.IMAGEURL && (
                   <img
@@ -83,7 +107,7 @@ export default function Book() {
                   />
                 )}
               </div>
-              <Payment amount={book?.PRECIO * data?.quantity} />
+              <Payment paymentData={paymentData} />
             </div>
           )}
         </main>

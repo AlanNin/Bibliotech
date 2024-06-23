@@ -6,8 +6,9 @@ generator client {
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("POSTGRES_URL")
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
 model Libro {
@@ -60,13 +61,13 @@ model Comentario {
 
 model Ventas {
   ID_VENTAS       Int      @id @default(autoincrement())
-  CANTIDAD_LIBROS Int
   FECHA_HORA      DateTime @default(now()) @db.Timestamp
   ENVIO           String
   DIRECCION String?
   PAIS      String?
   CIUDAD     String?
   CODIGO_POSTAL String?
+  CANTIDAD_LIBROS Int
   IMPUESTOS       Decimal  @db.Decimal(10, 2)
   SUBTOTAL        Decimal  @db.Decimal(10, 2)
   TOTAL           Decimal  @db.Decimal(10, 2)

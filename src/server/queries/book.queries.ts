@@ -1,41 +1,5 @@
 "use server";
-import { get, request } from "node_modules/axios/index.cjs";
 import prisma from "../prismaClient";
-//import bcrypt from "bcrypt";
-//import jwt from "jsonwebtoken";
-
-/*
-
-  // Example
-  type Book = {
-    isbn: string;
-    title: string;
-    author: string;
-    created_at: Date;
-    updated_at: Date | null;
-  };
-
-  // GET ALL BOOKS
-  export async function getAllBooks(): Promise<Book[]> {
-    try {
-      // FIND PROFILE
-      const books = await prisma.books.findMany();
-
-      // VALIDATE PROFILE AND USER
-      if (!books || books.length === 0) {
-        throw new Error("No books found");
-      }
-
-      return books;
-      } catch (error: any) {
-      throw new Error(`Failed to get books: ${error}`);
-    }
-  }
-
-  // EXAMPLE OF AUTHMIDDLEWARE USAGE
-  const user_id = await getUserFromAuth();
-
-*/
 
 // BOOKS EXISTS
 export async function bookExists(
@@ -61,8 +25,7 @@ export async function bookExists(
   }
 }
 
-//creating a book
-
+// CREATE BOOK
 export async function createBook(
   isbn: string,
   titulo: string,
@@ -132,7 +95,7 @@ export async function createBook(
   }
 }
 
-//Getting all of the database books
+// GET ALL BOOKS
 export async function getAllBooks() {
   try {
     //Using prisma "findMany" to get all books
@@ -144,29 +107,9 @@ export async function getAllBooks() {
   }
 }
 
-//Getting one specific book by id
-export async function getBookService(id: number) {
-  try {
-    //with findUnique you can search for "Unique" denominated fields on prisma schema
-    const requestedBook = await prisma.libro.findUnique({
-      where: {
-        ID_LIBRO: id,
-      },
-    });
-
-    return requestedBook;
-  } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(error.message);
-    } else {
-      throw new Error("An unknown error occurred.");
-    }
-  }
-}
-
+// GET BOOK BY ISBN
 export async function getBookByISBN(isbn: string) {
   try {
-    //with findUnique you can search for "Unique" denominated fields on prisma schema
     const requestedBook = await prisma.libro.findFirst({
       where: {
         ISBN: isbn,
@@ -190,7 +133,7 @@ export async function getBookByISBN(isbn: string) {
   }
 }
 
-//Getting books by the words on the title
+// SEARCH BOOKS BY TITLE
 export async function getBookByNameService(tolook: String) {
   try {
     var requestedBooks = null;
@@ -215,6 +158,7 @@ export async function getBookByNameService(tolook: String) {
   }
 }
 
+// SEARCH BOOKS BY GENRE
 export async function getBooksByGenreService(generos: String) {
   try {
     const genre = await prisma.genero.findMany({
@@ -260,7 +204,7 @@ export async function getBooksByGenreService(generos: String) {
     }
   }
 }
-// add copies
+// ADD COPIES
 export async function addCopies(isbn: string, cantidad_libros: number) {
   try {
     const book = await prisma.libro.findFirst({
@@ -290,7 +234,7 @@ export async function addCopies(isbn: string, cantidad_libros: number) {
   }
 }
 
-//updating a book
+// UPDATE BOOK
 export async function updateBook(
   isbn: string,
   titulo?: string,
@@ -332,7 +276,7 @@ export async function updateBook(
   }
 }
 
-//deleting a book
+// DELETE BOOK
 export async function deleteBookService(id: number) {
   try {
     const requestedBook = await prisma.libro.delete({

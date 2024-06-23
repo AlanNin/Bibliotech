@@ -12,21 +12,21 @@ if (process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY === undefined) {
 const stripe = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
 type PaymentProps = {
-  amount: number;
+  paymentData: any;
 };
 
-export const Payment: React.FC<PaymentProps> = ({ amount }) => {
+export const Payment: React.FC<PaymentProps> = ({ paymentData }) => {
   return (
     <div className={styles.container}>
       <Elements
         stripe={stripe}
         options={{
           mode: "payment",
-          amount: convertToSubcurrency(amount),
+          amount: convertToSubcurrency(paymentData.total),
           currency: "usd",
         }}
       >
-        <CheckoutPage amount={amount} />
+        <CheckoutPage paymentData={paymentData} />
       </Elements>
     </div>
   );

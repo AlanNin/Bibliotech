@@ -9,8 +9,13 @@ import { useEffect, useState } from "react";
 import convertToSubcurrency from "./convertToSubcurrency";
 import { ProcessPaymentIntent } from "~/server/APIs/Stripe.api";
 import ReactLoading from "react-loading";
+import { createSell } from "~/server/queries/sell.queries";
 
-const CheckoutPage = ({ amount }: { amount: number }) => {
+type CheckOutProps = {
+  paymentData: any;
+};
+
+export const CheckoutPage: React.FC<CheckOutProps> = ({ paymentData }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [errorMessage, setErrorMessage] = useState<string>();
@@ -20,7 +25,7 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
   useEffect(() => {
     const fetchPaymentIntent = async () => {
       const paymentIntent = await ProcessPaymentIntent(
-        convertToSubcurrency(amount)
+        convertToSubcurrency(paymentData.total)
       );
       if (
         paymentIntent.success === true &&
@@ -31,7 +36,7 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
     };
 
     fetchPaymentIntent();
-  }, [amount]);
+  }, [paymentData]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -49,21 +54,37 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
       return;
     }
 
-    const { error } = await stripe.confirmPayment({
+    const result = await stripe.confirmPayment({
       elements,
       clientSecret,
       confirmParams: {
-        return_url: `${window.location.origin}/payment-success?amount=${amount}`,
+        return_url: `${window.location.origin}/payment-success?amount=${paymentData.total}`,
       },
     });
+    console.log(result);
 
-    if (error) {
+    if (result.error) {
       // This point is only reached if there's an immediate error when
       // confirming the payment. Show the error to your customer (for example, payment details incomplete)
-      setErrorMessage(error.message);
+      setErrorMessage(result.error.message);
     } else {
       // The payment UI automatically closes with a success animation.
       // Your customer is redirected to your `return_url`.
+      /*
+      await createSell(
+        paymentData.shippment,
+        paymentData.address,
+        paymentData.country,
+        paymentData.city,
+        paymentData.postalCode,
+        paymentData.bookQuantity,
+        paymentData.iva,
+        paymentData.subTotal,
+        paymentData.total,
+        "fsa",
+        paymentData.bookId
+      );
+      */
     }
 
     setLoading(false);
