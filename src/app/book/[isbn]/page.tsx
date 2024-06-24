@@ -139,16 +139,22 @@ export default function Book() {
                   First published on {book?.FECHA_EDICION}
                 </div>
 
-                {book?.genres?.length > 0 && (
+                {book?.genres?.length > 0 ? (
                   <div className={styles.bookGenresContainer}>
                     <span className={styles.genresLabel}>Genres:</span>
-                    {book?.genres
-                      ?.slice(0, 10)
+                    {book.genres
+                      .slice(0, 10)
                       .map((genre: any, index: number) => (
                         <span key={index} className={styles.genre}>
                           {genre.NOMBRE_GENERO}
                         </span>
                       ))}
+                  </div>
+                ) : (
+                  <div className={styles.bookGenresContainer}>
+                    <span className={styles.genresLabel}>
+                      No genres found for this book
+                    </span>
                   </div>
                 )}
 

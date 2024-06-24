@@ -11,11 +11,14 @@ import { EditionsModule } from "./_components/editionModule/editionsModule";
 import { ArrowLeftCircleIcon } from "@heroicons/react/24/outline";
 import { PriceModule } from "./_components/priceModule/priceModule";
 import { useUser } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { addCopies, createBook } from "~/server/queries/book.queries";
 import BookIlustration1 from "~/../public/assets/BookIlustration1.webp";
 import BookIlustration2 from "~/../public/assets/BookIlustration2.webp";
+import BookIlustration4 from "~/../public/assets/BookIlustration4.webp";
 import Image from "next/image";
+import ReactLoading from "react-loading";
+import { toast } from "react-toastify";
 
 interface Inputs {
   title: string;
@@ -23,6 +26,7 @@ interface Inputs {
 
 export default function Publish() {
   const { user } = useUser();
+  const router = useRouter();
   if (user?.publicMetadata.role !== "admin") {
     redirect("/");
   }
@@ -34,6 +38,7 @@ export default function Publish() {
   const [books, setBooks] = useState<any[]>([]);
   const [selectedBook, setSelectedBook] = useState<any>();
   const [bookEditions, setBookEditions] = useState<any[]>([]);
+  const [isPublishing, setIsPublishing] = useState<boolean>(false);
 
   const handleSelectBook = (book: any) => {
     if (step === 1) {
@@ -80,6 +85,7 @@ export default function Publish() {
     genres: any[]
   ) => {
     if (selectedBook) {
+      setIsPublishing(true);
       const response = await createBook(
         isbn,
         title,
@@ -94,13 +100,15 @@ export default function Publish() {
         genres
       );
       if (response.success === true) {
+        toast.success("Book published successfully");
         setShowBooks(false);
-        setStep(1);
+        setStep(4);
         setSelectedBook(null);
         setBookEditions([]);
       } else {
-        //
+        toast.error("Error publishing book");
       }
+      setIsPublishing(false);
     }
   };
 
@@ -115,7 +123,7 @@ export default function Publish() {
       const response = await addCopies(isbn, quantity);
       if (response) {
         setShowBooks(false);
-        setStep(1);
+        setStep(4);
         setSelectedBook(null);
         setBookEditions([]);
       } else {
@@ -188,6 +196,11 @@ export default function Publish() {
         )}
         {step === 3 && (
           <>
+            {isPublishing && (
+              <div className={styles.isPublishingContainer}>
+                <ReactLoading type="bars" color="#fff" height={70} width={70} />
+              </div>
+            )}
             <div className={styles.backButtonTitleContainer}>
               <ArrowLeftCircleIcon
                 className={styles.backButtonIcon}
@@ -203,6 +216,35 @@ export default function Publish() {
               handlePublish={handlePublish}
               handleAddCopies={handleAddCopies}
             />
+          </>
+        )}
+        {step === 4 && (
+          <>
+            <div className={styles.publishedContainer}>
+              <Image
+                alt="bookIlustration"
+                src={BookIlustration4}
+                className={styles.bookIlustration4}
+              />
+              <h1 className={styles.publishedTitle}>
+                Book Published Successfully!
+              </h1>
+              <div className={styles.publishedButtonsContainer}>
+                <button
+                  className={styles.goHomeButton}
+                  onClick={() => router.push("/")}
+                >
+                  Go Home
+                </button>
+                <span className={styles.orSpan}> or </span>
+                <button
+                  className={styles.publishAnotherButton}
+                  onClick={() => setStep(1)}
+                >
+                  Publish Another Book
+                </button>
+              </div>
+            </div>
           </>
         )}
       </div>

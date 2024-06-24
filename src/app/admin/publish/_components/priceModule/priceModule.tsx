@@ -40,7 +40,7 @@ export const PriceModule: React.FC<PriceProps> = ({
     : "https://dummyimage.com/180x190/dedede/3b3b3b&text=Image+Not+Available";
   const rating = selectedBook?.ratings_average?.toFixed(1) || 0.0;
   const physical_format = selectedBook?.physical_format || "";
-  const genres = selectedBook?.subject;
+  const genres = selectedBook?.subject || [];
 
   const [isbnExists, setIsbnExists] = useState<boolean>(false);
 
