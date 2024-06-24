@@ -1,5 +1,5 @@
 "use server";
-import { auth } from "@clerk/nextjs/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 import prisma from "../prismaClient";
 
 // CREATE SELL
@@ -44,7 +44,49 @@ export async function createSell(
 
     return createdSell;
   } catch (error) {
+    console.log(error);
     throw new Error("Unable create sell. Please try again later.");
+  }
+}
+
+// GET SELL BY STRIPE ID
+export async function getSellByStripeId(stripeId: string) {
+  const { userId } = auth();
+
+  try {
+    const data = await prisma.ventas.findFirst({
+      where: {
+        ID_STRIPE: stripeId,
+      },
+    });
+
+    if (!data) {
+      throw new Error("Sell not found");
+    }
+
+    if (!userId) {
+      throw new Error("User ID is undefined");
+    }
+
+    const user = await clerkClient.users.getUser(userId);
+    const userFullName = user.fullName || "";
+    const userEmail = user.emailAddresses[0]?.emailAddress || "";
+    const userPhone = user.phoneNumbers[0]?.phoneNumber || "";
+
+    console.log("userEmail", userEmail);
+    console.log("userPhone", userPhone);
+
+    const response = {
+      ...data,
+      userFullName,
+      userEmail,
+      userPhone,
+    };
+
+    return response;
+  } catch (error) {
+    console.error("Error fetching sell data:", error);
+    throw new Error("Unable to get sell data. Please try again later.");
   }
 }
 

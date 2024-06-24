@@ -1,5 +1,5 @@
 "use client";
-import styles from "./bookCard.module.css";
+import styles from "./index.module.css";
 import { useRouter } from "next/navigation";
 
 type BookProps = {

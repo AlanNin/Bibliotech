@@ -79,13 +79,15 @@ export const CheckoutPage: React.FC<CheckOutProps> = ({ paymentData }) => {
       );
     } catch (error) {
       setErrorMessage("Error processing payment");
+      setLoading(false);
+      return;
     }
 
     const { error } = await stripe.confirmPayment({
       elements,
       clientSecret,
       confirmParams: {
-        return_url: `${window.location.origin}/payment-success?amount=${paymentData.total}`,
+        return_url: `${window.location.origin}/payment-success`,
       },
     });
 

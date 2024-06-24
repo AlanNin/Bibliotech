@@ -2,7 +2,7 @@
 import styles from "./index.module.css";
 import { getBooksByGenreService } from "~/server/queries/book.queries";
 import { useEffect, useState } from "react";
-import { BookCard } from "~/app/_shared/book_card/bookCard";
+import { BookCard } from "~/app/_shared/book_card";
 import ReactLoading from "react-loading";
 
 import { useParams } from "next/navigation";

@@ -2,7 +2,7 @@
 import styles from "./index.module.css";
 import { getAllBooks } from "~/server/queries/book.queries";
 import { useEffect, useState } from "react";
-import { BookCard } from "./_shared/book_card/bookCard";
+import { BookCard } from "./_shared/book_card";
 import ReactLoading from "react-loading";
 
 export default function Home() {

@@ -133,6 +133,25 @@ export async function getBookByISBN(isbn: string) {
   }
 }
 
+// GET BOOK BY ID
+export async function getBookByID(id: number) {
+  try {
+    const requestedBook = await prisma.libro.findUnique({
+      where: {
+        ID_LIBRO: id,
+      },
+    });
+
+    return requestedBook;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("An unknown error occurred.");
+    }
+  }
+}
+
 // SEARCH BOOKS BY TITLE
 export async function getBookByNameService(tolook: String) {
   try {

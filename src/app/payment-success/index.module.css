@@ -1,5 +1,6 @@
 .main {
   display: flex;
+  flex-direction: column;
   min-height: 100vh;
   width: 100%;
   padding-top: 72px;
@@ -17,7 +18,6 @@
   justify-content: center;
   gap: 12px;
   padding: 48px;
-  margin-top: -70px;
 }
 
 .checkCircleIcon {
@@ -33,24 +33,81 @@
   letter-spacing: 1px;
 }
 
-.homeButton {
-  color: white;
-  width: 100%;
-  padding: 14px;
-  background-color: rgba(0, 0, 0, 0.5);
-  border: none;
+.buttonsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
   margin-top: 24px;
+  height: max-content;
+  width: max-content;
+}
+
+.button {
+  color: white;
+  font-family: "Oswald", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  width: max-content;
+  border: none;
+  padding: 12px 18px;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 18px;
-  font-weight: 400px;
-  font-family: "Oswald", sans-serif;
+  line-height: 0;
+  letter-spacing: 1px;
   background-color: #58a9e2;
   background-image: linear-gradient(to left, #58a9e2, #6fc2f1);
   transition: background-color 0.3s ease;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
   &:hover {
     background-color: #4b8ac8;
     background-image: none;
   }
+}
+
+.invoiceButton {
+  color: rgb(102, 102, 102);
+  background-color: transparent;
+  width: max-content;
+  border: none;
+  cursor: pointer;
+  line-height: 0;
+  transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  &:hover {
+    color: rgb(44, 44, 44);
+  }
+}
+
+.invoiceButtonText {
+  font-family: "Oswald", sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  margin-top: -2px;
+}
+
+.invoiceContainer {
+  width: 1180px;
+  height: fit-content;
+  padding-left: 80px;
+  padding-right: 80px;
+}
+
+.PDFContainer {
+  width: 100%;
+  height: fit-content;
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
