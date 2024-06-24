@@ -33,12 +33,12 @@ export default function Book(): JSX.Element {
       }
 
       const canvas = await html2canvas(inputData, {
-        scale: 1,
-        useCORS: true,
-        logging: true,
+        scale: 2, // Aumenta la escala para mejorar la calidad
+        useCORS: true, // Habilita CORS si es necesario
+        logging: true, // Habilita el logging para depuración
       });
 
-      const imgData = canvas.toDataURL("image/jpeg", 5);
+      const imgData = canvas.toDataURL("image/jpeg", 1.0);
 
       const pdf = new jsPDF({
         orientation: "portrait",
