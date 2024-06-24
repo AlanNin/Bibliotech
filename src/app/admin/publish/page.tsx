@@ -143,6 +143,18 @@ export default function Publish() {
     }
   }, [selectedBook]);
 
+  useEffect(() => {
+    if (isPublishing) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isPublishing]);
+
   return (
     <main className={styles.main}>
       <div className={styles.container}>
