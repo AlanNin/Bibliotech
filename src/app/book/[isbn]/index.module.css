@@ -23,7 +23,7 @@
 .container {
   display: flex;
   justify-content: center;
-  width: 1280px;
+  width: 1080px;
   max-width: 1280px;
   margin-top: 44px;
   gap: 52px;
