@@ -10,6 +10,7 @@
 - [x] Auth (w/ Clerk)
 - [x] Scaffold basic pages UI
 - [x] Attach database to UI
+- [~] Implement toasts
 - [ ] Search improvements areas
 
 -- Home Sections
@@ -31,7 +32,7 @@
 -- Books
 
 - [x] Create book page
-- [ ] Add reviews to book page
+- [x] Add reviews to book page
 
 ## If there is enough time
 

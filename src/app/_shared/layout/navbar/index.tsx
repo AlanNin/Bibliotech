@@ -1,6 +1,6 @@
 "use client";
 import { MagnifyingGlassIcon, Bars4Icon } from "@heroicons/react/24/outline";
-import Logo from "~/../public/assets/CarritoCompras.png";
+import Logo from "~/../public/assets/xdLogo.svg";
 import styles from "./index.module.css";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -37,7 +37,7 @@ const Navbar = () => {
               className={styles.logoContainer}
               onClick={() => router.push("/")}
             >
-              <Image src={Logo} alt="Shopping Cart" width={48} height={48} />
+              <Image src={Logo} alt="App Logo" className={styles.appLogo} />
               <h1 className={styles.appName}>Bibliotech</h1>
             </div>
           </div>

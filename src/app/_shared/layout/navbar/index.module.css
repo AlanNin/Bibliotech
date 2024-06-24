@@ -6,22 +6,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2px 40px;
+  padding: 2px 60px;
 }
 
 .leftItemsAndSearch {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex: 0.75;
-  gap: 180px;
-}
-
-.logoContainer {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 14px;
+  flex: 0.88;
+  gap: 160px;
 }
 
 .leftItems {
@@ -31,7 +24,7 @@
 }
 
 .barsIcon {
-  color: #fff;
+  color: #063150;
   height: 36px;
   width: 36px;
   cursor: pointer;
@@ -39,17 +32,32 @@
   border-radius: 100%;
   transition: background-color 300ms;
   cursor: pointer;
+  stroke-width: 2px;
 
   &:hover {
     background-color: rgb(255, 255, 255, 0.15);
   }
 }
 
+.logoContainer {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.appLogo {
+  width: 36px;
+  height: auto;
+  object-fit: cover;
+}
+
 .appName {
   font-size: 24px;
   font-weight: 700;
-  color: #1f567e;
+  color: #063150;
   font-family: "Oswald", sans-serif;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
 }
 
 .searchBar {
@@ -63,16 +71,17 @@
   width: 100%;
   height: 100%;
   border: none;
-  background: #7cb5dd;
+  background: rgba(0, 0, 0, 0.35);
   color: #fff;
   font-size: 16px;
   font-weight: 400;
   padding: 8px 16px;
-  border-radius: 4px;
+  border-radius: 8px;
   box-sizing: border-box;
+  font-family: "Oswald", sans-serif;
 
   &::placeholder {
-    color: #e0e0e0;
+    color: #c9c9c9;
     font-size: 16px;
     font-weight: 400;
     font-family: "Oswald", sans-serif;
@@ -91,8 +100,9 @@
   width: 20px;
   top: 50%;
   transform: translateY(-50%);
-  right: 8px;
+  right: 16px;
   cursor: pointer;
+  stroke-width: 2px;
 }
 
 .signInButton {
