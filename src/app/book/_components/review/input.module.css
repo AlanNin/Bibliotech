@@ -1,0 +1,50 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 8px;
+}
+
+.textarea {
+  width: 100%;
+  padding: 12px;
+  background-color: rgb(221, 221, 221);
+  border: 1px solid rgb(0, 0, 0, 0.2);
+  border-radius: 4px;
+  resize: none;
+  font-size: 16px;
+  font-weight: 300;
+  font-family: "Oswald", sans-serif;
+  color: black;
+  line-height: 1;
+
+  &&::placeholder {
+    color: black;
+    font-family: "Oswald", sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+  }
+
+  &&:focus {
+    outline: none;
+  }
+}
+
+.submitButton {
+  align-self: end;
+  width: max-content;
+  padding: 6px 12px;
+  background-color: rgb(221, 221, 221);
+  border: none;
+  font-size: 16px;
+  font-family: "Oswald", sans-serif;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #0c5c96;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #1c6dbe;
+  }
+}

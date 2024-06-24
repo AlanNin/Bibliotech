@@ -1,9 +1,9 @@
 "use client";
-import styles from "./payment.module.css";
+import styles from "./index.module.css";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import convertToSubcurrency from "./convertToSubcurrency";
-import CheckoutPage from "./checkout";
+import convertToSubcurrency from "../convertToSubcurrency";
+import CheckoutPage from "../checkout";
 
 if (process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY === undefined) {
   throw new Error("NEXT_PUBLIC_STRIPE_PUBLIC_KEY is not defined");

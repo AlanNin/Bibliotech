@@ -73,9 +73,6 @@ export async function getSellByStripeId(stripeId: string) {
     const userEmail = user.emailAddresses[0]?.emailAddress || "";
     const userPhone = user.phoneNumbers[0]?.phoneNumber || "";
 
-    console.log("userEmail", userEmail);
-    console.log("userPhone", userPhone);
-
     const response = {
       ...data,
       userFullName,

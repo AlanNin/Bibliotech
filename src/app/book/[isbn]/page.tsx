@@ -7,11 +7,10 @@ import { useRouter } from "next/navigation";
 import ReactLoading from "react-loading";
 import GoodReadsLogo from "~/../public/assets/GoodreadsLogo.png";
 import Image from "next/image";
-import { useUser } from "@clerk/nextjs";
 import { createPaymentOrder } from "~/server/queries/payment.queries";
+import { Review } from "../_components/review";
 
 export default function Book() {
-  const { user } = useUser();
   const router = useRouter();
   const { isbn } = useParams();
   const [book, setBook] = useState<any>();
@@ -233,6 +232,7 @@ export default function Book() {
                 </div>
               </div>
             </div>
+            <Review bookId={book?.ID_LIBRO} />
           </div>
         </main>
       )}
@@ -242,20 +242,13 @@ export default function Book() {
 
 function getPriceInteger(price: number) {
   if (!price) return "";
-  const [integerPart, decimalPart] = price.toString().split(".");
+  const [integerPart] = price.toString().split(".");
   return integerPart;
 }
 function getPriceCents(price: number) {
   if (!price) return "";
-  const [integerPart, decimalPart] = price.toString().split(".");
+  const [decimalPart] = price.toString().split(".");
   return decimalPart ? `${decimalPart}` : "";
-}
-
-function formatPrice(number: number): string {
-  const numberString = number.toString();
-  return parseFloat(numberString)
-    .toFixed(2)
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 function formatPriceToRD(number: number): string {
@@ -265,3 +258,12 @@ function formatPriceToRD(number: number): string {
     .toFixed(2)
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
+/*
+function formatPrice(number: number): string {
+  const numberString = number.toString();
+  return parseFloat(numberString)
+    .toFixed(2)
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+*/

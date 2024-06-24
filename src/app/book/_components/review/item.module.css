@@ -1,0 +1,139 @@
+.container {
+  display: flex;
+  align-items: start;
+}
+
+.avatar {
+  width: auto;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: contain;
+}
+
+.reviewContent {
+  margin-left: 14px;
+  display: flex;
+  flex-direction: column;
+  padding: 0px 0px;
+  height: 100%;
+  width: 100%;
+  gap: 6px;
+}
+
+.userName {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.reviewDate {
+  color: rgb(92, 92, 92);
+  font-weight: 400;
+}
+
+.ellipsisContainer {
+  position: relative;
+  align-items: end;
+  justify-content: end;
+  margin: 0;
+  height: fit-content;
+}
+
+.ellipsis {
+  cursor: pointer;
+  user-select: none;
+  margin-bottom: -6px;
+  padding: 0;
+}
+
+.reviewText {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.reviewMenu {
+  position: absolute;
+  top: 16px;
+  left: 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background-color: #d3d3d3;
+  border-radius: 4px;
+  padding: 4px 0px;
+  z-index: 10;
+}
+
+.menuButton {
+  display: flex;
+  align-items: center;
+  border: none;
+  width: auto;
+  height: fit-content;
+  margin: 0;
+  cursor: pointer;
+  background-color: transparent;
+  text-align: start;
+  font-size: 14px;
+  text-wrap: nowrap;
+  padding: 12px 16px;
+  border-radius: 4px;
+  gap: 12px;
+  transition: background-color 0.15s ease;
+  &:hover {
+    background-color: #c9c8c8;
+  }
+}
+
+.editContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 8px;
+}
+
+.inputEdit {
+  width: 100%;
+  padding: 6px 10px;
+  background-color: rgb(221, 221, 221);
+  border: 1px solid rgb(0, 0, 0, 0.2);
+  border-radius: 4px;
+  resize: none;
+  font-size: 14px;
+  font-weight: 300;
+  color: black;
+  line-height: 1;
+
+  &&::placeholder {
+    color: black;
+    font-size: 16px;
+    font-weight: 300;
+  }
+
+  &&:focus {
+    outline: none;
+  }
+}
+
+.editButton {
+  align-self: end;
+  width: max-content;
+  padding: 4px 12px;
+  background-color: rgb(221, 221, 221);
+  border: none;
+  font-size: 16px;
+  font-family: "Oswald", sans-serif;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #0c5c96;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #1c6dbe;
+  }
+}

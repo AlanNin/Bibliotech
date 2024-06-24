@@ -3,6 +3,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 // import { dark } from "@clerk/themes";
 import { GeistSans } from "geist/font/sans";
 import Navbar from "./_shared/layout/navbar";
+import { ReactToastContainer } from "./_shared/layout/toast_container";
 
 export const metadata = {
   title: "Bibliotech",
@@ -20,6 +21,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={GeistSans.className}>
           <Navbar />
+          <ReactToastContainer />
           {children}
         </body>
       </html>

@@ -1,12 +1,12 @@
 "use client";
-import styles from "./checkout.module.css";
+import styles from "./index.module.css";
 import {
   useStripe,
   useElements,
   PaymentElement,
 } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
-import convertToSubcurrency from "./convertToSubcurrency";
+import convertToSubcurrency from "../convertToSubcurrency";
 import { ProcessPaymentIntent } from "~/server/APIs/Stripe.api";
 import ReactLoading from "react-loading";
 import { createSell, deleteSell } from "~/server/queries/sell.queries";

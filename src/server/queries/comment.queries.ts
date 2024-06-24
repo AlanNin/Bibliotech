@@ -1,9 +1,9 @@
 "use server";
-import { auth } from "@clerk/nextjs/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 import prisma from "../prismaClient";
 
-//Creating comments
-export async function createCommentService(
+// CREATE COMMENT
+export async function createComment(
   descripcion_comentario: string,
   id_libro: number
 ) {
@@ -12,7 +12,6 @@ export async function createCommentService(
     if (!userId) {
       throw new Error("User ID is undefined");
     }
-    //Using prisma to create a comment
     const createdComment = await prisma.comentario.create({
       data: {
         DESCRIPCION_COMENTARIO: descripcion_comentario,
@@ -24,6 +23,42 @@ export async function createCommentService(
     });
 
     return createdComment;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("An unknown error occurred.");
+    }
+  }
+}
+
+// GET COMMENTS FROM A BOOKID
+export async function getCommentFromBookId(bookId: number) {
+  try {
+    const data = await prisma.comentario.findMany({
+      where: {
+        ID_LIBRO: bookId,
+      },
+      orderBy: {
+        ID_COMENTARIO: "desc",
+      },
+    });
+
+    const response = await Promise.all(
+      data.map(async (comment) => {
+        const user = await clerkClient.users.getUser(comment.ID_USUARIO);
+        const userFullName = user.fullName || "";
+        const userImage = user.imageUrl || "";
+
+        return {
+          ...comment,
+          userFullName,
+          userImage,
+        };
+      })
+    );
+
+    return response;
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message);
@@ -66,18 +101,15 @@ export async function getCommentService(id: number) {
 }
 
 //Updating comment
-export async function updateCommentService(
+export async function updateComment(
   id: number,
-  descripcion_comentario: string,
-  id_usuario: number,
-  id_libro: number
+  descripcion_comentario: string
 ) {
   try {
     const requestedComment = await prisma.comentario.update({
       where: { ID_COMENTARIO: id },
       data: {
         DESCRIPCION_COMENTARIO: descripcion_comentario,
-        ID_LIBRO: id_libro,
       },
     });
 
@@ -92,7 +124,7 @@ export async function updateCommentService(
 }
 
 //Deleting a comment
-export async function deleteCommentService(id: number) {
+export async function deleteComment(id: number) {
   try {
     const requestedComment = await prisma.comentario.delete({
       where: { ID_COMENTARIO: id },

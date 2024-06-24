@@ -1,0 +1,91 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 14px;
+  gap: 18px;
+}
+
+.title {
+  font-size: 2rem;
+  margin: 0;
+  font-family: "Oswald", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: #1e608e;
+  display: flex;
+  align-items: end;
+  line-height: 1;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.reviewsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.loadingContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  margin-top: 60px;
+}
+
+.signToComment {
+  font-size: 16px;
+  margin: 0;
+  font-family: "Oswald", sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  color: #888888;
+  margin-bottom: 4px;
+}
+
+.noReviewsContainer {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.noReviewsIlustration {
+  height: auto;
+  width: 400px;
+}
+
+.noReviewsTexts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: fit-content;
+  gap: 0px;
+}
+
+.noReviewsTitle {
+  font-size: 28px;
+  margin: 0;
+  font-family: "Oswald", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: #1e608e;
+  margin-bottom: 4px;
+}
+
+.noReviewsSubTitle {
+  font-size: 16px;
+  margin: 0;
+  font-family: "Oswald", sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  color: #6b6a6a;
+  margin-bottom: 4px;
+}
