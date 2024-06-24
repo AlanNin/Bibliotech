@@ -74,8 +74,8 @@ export default function Invoice({ invoiceData }: InvoiceProps): JSX.Element {
   const detail = invoiceData?.bookInfo?.TITULO;
   const price = invoiceData?.bookInfo?.PRECIO;
   const quantity = invoiceData?.CANTIDAD_LIBROS;
-  const iva = invoiceData?.bookInfo?.PRECIO * 0.04; // 4%
   const subtotal = invoiceData?.bookInfo?.PRECIO * invoiceData?.CANTIDAD_LIBROS;
+  const iva = subtotal * 0.04; // 4%
   const total = subtotal + iva;
   const paymentReference = invoiceData?.ID_STRIPE;
 
