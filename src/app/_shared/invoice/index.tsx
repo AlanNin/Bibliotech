@@ -1,6 +1,6 @@
 "use client";
 import styles from "./index.module.css";
-import AppLogo from "~/../public/assets/xdLogo.png";
+import AppLogo from "~/../public/assets/xdLogo.svg";
 import { useTable, Column } from "react-table";
 import Image from "next/image";
 import React from "react";
