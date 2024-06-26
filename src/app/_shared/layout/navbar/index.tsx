@@ -15,23 +15,17 @@ const Navbar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-
-  const [searchInput, setSearchInput] = useState(""); 
+  const [searchInput, setSearchInput] = useState("");
 
   const handleSearchInputChange = (event: any) => {
-    setSearchInput(event.target.value); 
+    setSearchInput(event.target.value);
   };
-  
-
-
 
   const handleSearchClick = () => {
     if (searchInput.trim() !== "") {
       router.push(`/search/${searchInput}`);
     }
   };
-
-  
 
   useEffect(() => {
     if (isSidebarOpen) {
@@ -46,40 +40,38 @@ const Navbar = () => {
   }, [isSidebarOpen]);
 
   return (
-
-      <div className={styles.container}>
-        <div className={styles.leftItemsAndSearch}>
-          <div className={styles.leftItems}>
-            <Bars4Icon className={styles.barsIcon} onClick={toggleSidebar} />
-            <div
-              className={styles.logoContainer}
-              onClick={() => router.push("/")}
-            >
-              <Image src={Logo} alt="App Logo" className={styles.appLogo} />
-              <h1 className={styles.appName}>Bibliotech</h1>
-            </div>
+    <div className={styles.container}>
+      <div className={styles.leftItemsAndSearch}>
+        <div className={styles.leftItems}>
+          <Bars4Icon className={styles.barsIcon} onClick={toggleSidebar} />
+          <div
+            className={styles.logoContainer}
+            onClick={() => router.push("/")}
+          >
+            <Image src={Logo} alt="App Logo" className={styles.appLogo} />
+            <h1 className={styles.appName}>Bibliotech</h1>
           </div>
+        </div>
 
-          <div className={styles.searchBar}>
+        <div className={styles.searchBar}>
           <input
             className={styles.searchInput}
             placeholder="Search"
-            value={searchInput} 
-            onChange={handleSearchInputChange} 
-          />
-          <MagnifyingGlassIcon
-            className={styles.searchIcon}
-            onClick={handleSearchClick} 
+            value={searchInput}
+            onChange={handleSearchInputChange}
             onKeyDown={(e) => {
               if (e.key === "Enter" && handleSearchClick) {
                 handleSearchClick();
               }
             }}
-             
-              />
+          />
+          <MagnifyingGlassIcon
+            className={styles.searchIcon}
+            onClick={handleSearchClick}
+          />
         </div>
         <SignedOut>
-          <SignInButton>  
+          <SignInButton>
             <div className={styles.signInButton}>Sign In</div>
           </SignInButton>
         </SignedOut>
