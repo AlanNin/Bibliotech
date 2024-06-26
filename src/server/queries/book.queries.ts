@@ -327,7 +327,7 @@ export async function getBooksHome() {
             ID_LIBRO: "desc",
           },
         },
-        take: 10,
+        take: 20,
       })
       .then((mostSoldBooks) => {
         const mostSoldBookIds = mostSoldBooks.map((sale) => sale.ID_LIBRO);
@@ -345,7 +345,7 @@ export async function getBooksHome() {
       orderBy: {
         PRECIO: "asc",
       },
-      take: 10,
+      take: 20,
     });
 
     // Obtener los libros con los lanzamientos más recientes
@@ -353,11 +353,11 @@ export async function getBooksHome() {
       orderBy: {
         FECHA_EDICION: "desc",
       },
-      take: 10,
+      take: 20,
     });
 
     const randomBooksPromise = prisma.libro.findMany({
-      take: 10,
+      take: 20,
       orderBy: {
         ID_LIBRO: "asc",
       },

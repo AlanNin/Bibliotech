@@ -62,11 +62,15 @@ export default function Book(): JSX.Element {
         setInvoiceData({ ...response, bookInfo });
         setIsLoading(false);
       } else {
-        console.error("Invalid pi:", pi);
+        router.push("/");
       }
     };
     handleFetchPaymentData();
   }, [pi]);
+
+  if (!pi) {
+    router.push("/");
+  }
 
   return (
     <>

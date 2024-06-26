@@ -62,7 +62,7 @@ export const Order: React.FC<OrderProps> = ({ order }) => {
               <h1 className={styles.orderText}>
                 {title} x {quantity}
               </h1>
-              <h1 className={styles.orderText}>Price: ${price}</h1>
+              <h1 className={styles.orderText}>Total Price: ${price}</h1>
               <h1 className={styles.orderText}>Shippement: {shippment}</h1>
               <h1 className={styles.orderText}>
                 Payment Reference: {paymentReference}
