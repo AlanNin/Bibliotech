@@ -386,3 +386,94 @@ export async function getBooksHome() {
     throw new Error("Unable to fetch books. Please try again later.");
   }
 }
+
+// GET TRENDING BOOKS
+export async function getTrendingBooks() {
+  try {
+    const mostSoldBooksPromise = prisma.ventas.groupBy({
+      by: ["ID_LIBRO"],
+      _count: {
+        ID_LIBRO: true,
+      },
+      orderBy: {
+        _count: {
+          ID_LIBRO: "desc",
+        },
+      },
+      take: 20,
+    });
+
+    const mostCommentedBooksPromise = prisma.comentario.groupBy({
+      by: ["ID_LIBRO"],
+      _count: {
+        ID_LIBRO: true,
+      },
+      orderBy: {
+        _count: {
+          ID_LIBRO: "desc",
+        },
+      },
+      take: 20,
+    });
+
+    const [mostSoldBooks, mostCommentedBooks] = await Promise.all([
+      mostSoldBooksPromise,
+      mostCommentedBooksPromise,
+    ]);
+
+    // Crear un mapa para almacenar y sumar los recuentos de ventas y comentarios
+    const booksMap = new Map();
+
+    // Agregar recuentos de ventas al mapa
+    mostSoldBooks.forEach((sale) => {
+      const bookId = sale.ID_LIBRO;
+      if (!booksMap.has(bookId)) {
+        booksMap.set(bookId, {
+          ID_LIBRO: bookId,
+          salesCount: 0,
+          commentsCount: 0,
+        });
+      }
+      booksMap.get(bookId).salesCount += sale._count.ID_LIBRO;
+    });
+
+    // Agregar recuentos de comentarios al mapa
+    mostCommentedBooks.forEach((comment) => {
+      const bookId = comment.ID_LIBRO;
+      if (!booksMap.has(bookId)) {
+        booksMap.set(bookId, {
+          ID_LIBRO: bookId,
+          salesCount: 0,
+          commentsCount: 0,
+        });
+      }
+      booksMap.get(bookId).commentsCount += comment._count.ID_LIBRO;
+    });
+
+    // Convertir el mapa a un array y ordenarlo por la suma de ventas y comentarios
+    const sortedBooks = Array.from(booksMap.values()).sort((a, b) => {
+      const totalA = a.salesCount + a.commentsCount;
+      const totalB = b.salesCount + b.commentsCount;
+      return totalB - totalA; // Orden descendente
+    });
+
+    // Obtener los IDs de los libros ordenados
+    const trendingBookIds = sortedBooks
+      .slice(0, 20)
+      .map((book) => book.ID_LIBRO);
+
+    // Obtener los detalles de los libros ordenados
+    const response = await prisma.libro.findMany({
+      where: {
+        ID_LIBRO: {
+          in: trendingBookIds,
+        },
+      },
+    });
+
+    return response;
+  } catch (error) {
+    console.error("Error fetching libros:", error);
+    throw error;
+  }
+}

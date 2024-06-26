@@ -128,14 +128,23 @@ const Sidebar: React.FC<SidebarProps> = ({ toggleSidebar }) => {
           </div>
           <div className={styles.sectionItem}>
             <Section Section="Trending" Icon={ShoppingBagIcon} />
-            <Item Item="Best Sellers" />
-            <Item Item="Trending Now" />
-            <Item Item="New Releases" />
+            <Item
+              Item="Trending Now"
+              handleClick={() => {
+                router.push("/trending");
+                closeSidebar();
+              }}
+            />
           </div>
           <div className={styles.sectionItem}>
             <Section Section="Our Recommendation" Icon={GiftIcon} />
-            <Item Item="Users favorite" />
-            <Item Item="Best Offers" />
+            <Item
+              Item="Users favorite"
+              handleClick={() => {
+                router.push("/trending");
+                closeSidebar();
+              }}
+            />
           </div>
         </div>
       </div>

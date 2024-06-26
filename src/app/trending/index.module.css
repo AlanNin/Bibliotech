@@ -1,0 +1,30 @@
+.main {
+    display: flex;
+    min-height: 100vh;
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+  
+  .container {
+    width: 100%;
+    display: flex;
+    padding: 28px 28px;
+  }
+  
+  .booksWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    width: max-content;
+    justify-content: center;
+    height: max-content;
+    margin: 0 auto;
+  }
+  
+  .loadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  

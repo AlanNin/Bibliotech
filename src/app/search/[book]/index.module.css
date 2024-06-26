@@ -1,30 +1,57 @@
 .main {
-    display: flex;
-    min-height: 100vh;
-    padding-top: 72px;
-    padding-bottom: 72px;
-  }
-  
-  .container {
-    width: 100%;
-    display: flex;
-    padding: 28px 28px;
-  }
-  
-  .booksWrapper {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 28px;
-    width: max-content;
-    justify-content: center;
-    height: max-content;
-    margin: 0 auto;
-  }
-  
-  .loadingContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
+  display: flex;
+  min-height: 100vh;
+  padding-top: 72px;
+  padding-bottom: 72px;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 28px;
+}
+
+.containerNotFound {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: 600;
+  color: #063150;
+  font-family: "Oswald", sans-serif;
+  letter-spacing: 1px;
+  margin-bottom: 28px;
+}
+
+.icon {
+  width: 144px;
+  height: 144px;
+  color: #063150;
+}
+
+.span {
+  color: #2c94dd;
+}
+
+.booksWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  width: max-content;
+  justify-content: center;
+  height: max-content;
+  margin: 0 auto;
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
