@@ -156,3 +156,17 @@ export async function deleteSell(id: number) {
     throw new Error("Unable delete sell. Please try again later.");
   }
 }
+
+export async function getUserOrders(userId: string) {
+  try {
+    const response = await prisma.ventas.findMany({
+      where: {
+        ID_USUARIO: userId,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.error("Error fetching Sells:", error);
+    throw new Error("Unable to fetch Sells. Please try again later.");
+  }
+}

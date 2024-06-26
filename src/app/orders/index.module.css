@@ -1,0 +1,33 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-top: 72px;
+  padding-bottom: 72px;
+  align-items: center;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #063150;
+  font-family: "Oswald", sans-serif;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+  padding: 24px;
+}
+
+.ordersContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  width: max-content;
+  padding: 12px 24px;
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}

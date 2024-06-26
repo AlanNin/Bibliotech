@@ -1,5 +1,6 @@
 "use client";
 import { MagnifyingGlassIcon, Bars4Icon } from "@heroicons/react/24/outline";
+import { ShoppingBagIcon } from "@heroicons/react/24/solid";
 import Logo from "~/../public/assets/xdLogo.svg";
 import styles from "./index.module.css";
 import Image from "next/image";
@@ -86,6 +87,10 @@ const Navbar = () => {
         </SignedOut>
         <SignedIn>
           <div className={styles.rightIcons}>
+            <ShoppingBagIcon
+              className={styles.bagIcon}
+              onClick={() => router.push("/orders")}
+            />
             <UserButton
               appearance={{
                 elements: {

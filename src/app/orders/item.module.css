@@ -1,0 +1,61 @@
+.orderContainer {
+  display: flex;
+  width: max-content;
+  background-color: rgba(61, 61, 61, 0.1);
+  padding: 24px;
+  padding-right: 36px;
+  border-radius: 12px;
+}
+
+.orderInfo {
+  display: flex;
+  gap: 18px;
+  width: max-content;
+  height: max-content;
+}
+
+.bookCover {
+  width: 200px;
+  height: auto;
+  border-radius: 0px;
+  border-top-right-radius: 18px;
+  border-bottom-right-radius: 18px;
+  object-fit: cover;
+}
+
+.orderData {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 4px;
+  gap: 12px;
+  width: max-content;
+}
+
+.orderNumber {
+  font-size: 24px;
+  font-weight: 500;
+  color: #0f3f61;
+  font-family: "Oswald", sans-serif;
+  margin: 0;
+  margin-bottom: 8px;
+}
+
+.orderText {
+  font-size: 18px;
+  font-weight: 400;
+  color: #0f3f61;
+  font-family: "Oswald", sans-serif;
+  margin: 0;
+  font-style: italic;
+}
+
+.invoiceIcon {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  color: #0f3f61;
+  width: 36px;
+  height: auto;
+  cursor: pointer;
+}

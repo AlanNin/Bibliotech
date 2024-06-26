@@ -124,7 +124,23 @@
 
 .rightIcons {
   display: flex;
-  gap: 14px;
+  align-items: center;
+  gap: 24px;
+}
+
+.bagIcon {
+  color: #03243b;
+  height: auto;
+  width: 38px;
+  padding: 6px;
+  cursor: pointer;
+  border-radius: 100%;
+  transition: background-color 300ms;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgb(255, 255, 255, 0.15);
+  }
 }
 
 .publishIcon {
