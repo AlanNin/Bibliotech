@@ -77,13 +77,6 @@ const Sidebar: React.FC<SidebarProps> = ({ toggleSidebar }) => {
           <div className={styles.sectionItem}>
             <Section Section="Categories" Icon={TagIcon} />
             <Item
-              Item="Action"
-              handleClick={() => {
-                router.push("/categories/action");
-                closeSidebar();
-              }}
-            />
-            <Item
               Item="Fiction"
               handleClick={() => {
                 router.push("/categories/fiction");
@@ -91,44 +84,44 @@ const Sidebar: React.FC<SidebarProps> = ({ toggleSidebar }) => {
               }}
             />
             <Item
-              Item="Thriller"
+              Item="Fantasy"
               handleClick={() => {
-                router.push("/categories/thriller");
+                router.push("/categories/fantasy");
                 closeSidebar();
               }}
             />
             <Item
-              Item="Comedy"
+              Item="Drama"
               handleClick={() => {
-                router.push("/categories/comedy");
+                router.push("/categories/crime");
                 closeSidebar();
               }}
             />
             <Item
-              Item="Romance"
+              Item="Love"
               handleClick={() => {
-                router.push("/categories/romance");
+                router.push("/categories/love");
                 closeSidebar();
               }}
             />
             <Item
-              Item="Mistery"
+              Item="Historical"
               handleClick={() => {
-                router.push("/categories/mistery");
+                router.push("/categories/historical");
                 closeSidebar();
               }}
             />
             <Item
-              Item="Comics"
+              Item="Literature"
               handleClick={() => {
-                router.push("/categories/comics");
+                router.push("/categories/literature");
                 closeSidebar();
               }}
             />
             <Item
-              Item="Science Fiction"
+              Item="Classics"
               handleClick={() => {
-                router.push("/categories/science-fiction");
+                router.push("/categories/classics");
                 closeSidebar();
               }}
             />
