@@ -29,9 +29,9 @@
   display: flex;
   flex-wrap: wrap;
   gap: 28px;
-  width: max-content;
+  width: 100%;
   justify-content: center;
-  height: max-content;
+  height: 100%;
   margin: 0 auto;
 }
 
