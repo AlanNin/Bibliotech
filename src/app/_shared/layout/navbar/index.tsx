@@ -8,22 +8,29 @@ import Sidebar from "../sidebar";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 
+type Inputs = {
+  search: string;
+};
+
 const Navbar = () => {
   const router = useRouter();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [inputs, setInputs] = useState<Inputs>({
+    search: "",
+  });
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const [searchInput, setSearchInput] = useState("");
-
-  const handleSearchInputChange = (event: any) => {
-    setSearchInput(event.target.value);
+  const handleChange = (e: any) => {
+    setInputs((prev) => {
+      return { ...prev, [e.target.name]: e.target.value };
+    });
   };
 
-  const handleSearchClick = () => {
-    if (searchInput.trim() !== "") {
-      router.push(`/search/${searchInput}`);
+  const handleSearch = () => {
+    if (inputs.search.length > 0) {
+      router.push(`/search/${inputs.search}`);
     }
   };
 
@@ -40,35 +47,37 @@ const Navbar = () => {
   }, [isSidebarOpen]);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.leftItemsAndSearch}>
-        <div className={styles.leftItems}>
-          <Bars4Icon className={styles.barsIcon} onClick={toggleSidebar} />
-          <div
-            className={styles.logoContainer}
-            onClick={() => router.push("/")}
-          >
-            <Image src={Logo} alt="App Logo" className={styles.appLogo} />
-            <h1 className={styles.appName}>Bibliotech</h1>
+    <>
+      <div className={styles.container}>
+        <div className={styles.leftItemsAndSearch}>
+          <div className={styles.leftItems}>
+            <Bars4Icon className={styles.barsIcon} onClick={toggleSidebar} />
+            <div
+              className={styles.logoContainer}
+              onClick={() => router.push("/")}
+            >
+              <Image src={Logo} alt="App Logo" className={styles.appLogo} />
+              <h1 className={styles.appName}>Bibliotech</h1>
+            </div>
           </div>
-        </div>
 
-        <div className={styles.searchBar}>
-          <input
-            className={styles.searchInput}
-            placeholder="Search"
-            value={searchInput}
-            onChange={handleSearchInputChange}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && handleSearchClick) {
-                handleSearchClick();
-              }
-            }}
-          />
-          <MagnifyingGlassIcon
-            className={styles.searchIcon}
-            onClick={handleSearchClick}
-          />
+          <div className={styles.searchBar}>
+            <input
+              className={styles.searchInput}
+              placeholder="Search"
+              name="search"
+              onChange={handleChange}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && handleSearch) {
+                  handleSearch();
+                }
+              }}
+            />
+            <MagnifyingGlassIcon
+              className={styles.searchIcon}
+              onClick={handleChange}
+            />
+          </div>
         </div>
         <SignedOut>
           <SignInButton>
@@ -97,7 +106,7 @@ const Navbar = () => {
           <Sidebar toggleSidebar={toggleSidebar} />
         </div>
       )}
-    </div>
+    </>
   );
 };
 
