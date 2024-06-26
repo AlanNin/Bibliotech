@@ -48,15 +48,36 @@ export default function Home() {
               </div>
               <div className={styles.section}>
                 <h1 className={styles.sectionTitle}>Best Offers</h1>
-                <Slider content={books.bestOffers} />
+                {books.bestOffers.length > 0 ? (
+                  <Slider content={books.bestOffers} />
+                ) : (
+                  <div className={styles.noBooks}>
+                    <h2>No books found</h2>
+                    <p>Try searching for a different book</p>
+                  </div>
+                )}
               </div>
               <div className={styles.section}>
                 <h1 className={styles.sectionTitle}>Most Recent Books</h1>
-                <Slider content={books.mostRecent} />
+                {books.mostRecent.length > 0 ? (
+                  <Slider content={books.mostRecent} />
+                ) : (
+                  <div className={styles.noBooks}>
+                    <h2>No books found</h2>
+                    <p>Try searching for a different book</p>
+                  </div>
+                )}
               </div>
               <div className={styles.section}>
                 <h1 className={styles.sectionTitle}>Explore New Books</h1>
-                <Slider content={books.random} />
+                {books.random.length > 0 ? (
+                  <Slider content={books.random} />
+                ) : (
+                  <div className={styles.noBooks}>
+                    <h2>No books found</h2>
+                    <p>Try searching for a different book</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
