@@ -1,15 +1,77 @@
 .bookContainer {
-  display: flex;
-  height: 100%;
-  width: 100%;
+  position: relative;
+  width: 200px;
+  height: 300px;
   cursor: pointer;
-  padding: 0;
-  margin: 0;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .bookCover {
-  width: 200px;
-  height: 300px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   border-radius: 10px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.bookContainer:hover .bookCover {
+  transform: scale(1.2);
+  filter: brightness(0.08);
+}
+
+.hoverContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 10px;
+  gap: 14px;
+  z-index: 1;
+}
+
+.bookContainer:hover .hoverContainer {
+  opacity: 1;
+}
+
+.price {
+  font-size: 24px;
+  font-weight: 700;
+  color: #063150;
+  font-family: "Oswald", sans-serif;
+  letter-spacing: 1px;
+  color: white;
+  margin: 0;
+}
+
+.rating {
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0;
+  margin-top: -2px;
+  font-family: "Oswald", sans-serif;
+}
+
+.yellowStar {
+  margin: 0;
+  font-size: 18px;
+  padding: 0 1px;
+  font-weight: 900;
+  color: #bbaf0c;
+}
+
+.greyStar {
+  margin: 0;
+  font-size: 18px;
+  padding: 0 1px;
+  font-weight: 900;
+  color: #adadad;
 }

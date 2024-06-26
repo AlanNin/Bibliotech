@@ -7,7 +7,7 @@ import ReactLoading from "react-loading";
 import { getPaymentOrder } from "~/server/queries/payment.queries";
 import { Payment } from "~/app/_shared/payment_components/payment";
 import { getBookByISBN } from "~/server/queries/book.queries";
-import AppLogo from "~/../public/assets/xdLogo.png";
+import AppLogo from "~/../public/assets/xdLogo.svg";
 import Image from "next/image";
 import { useUser } from "@clerk/nextjs";
 

@@ -143,7 +143,7 @@ export default function Book() {
                   <div className={styles.bookGenresContainer}>
                     <span className={styles.genresLabel}>Genres:</span>
                     {book.genres
-                      .slice(0, 10)
+                      .slice(0, 9)
                       .map((genre: any, index: number) => (
                         <span key={index} className={styles.genre}>
                           {genre.NOMBRE_GENERO}
@@ -247,14 +247,15 @@ export default function Book() {
 }
 
 function getPriceInteger(price: number) {
-  if (!price) return "";
-  const [integerPart] = price.toString().split(".");
-  return integerPart;
+  if (!price && price !== 0) return "";
+  const integerPart = Math.floor(price);
+  return integerPart.toString();
 }
+
 function getPriceCents(price: number) {
-  if (!price) return "";
-  const [decimalPart] = price.toString().split(".");
-  return decimalPart ? `${decimalPart}` : "";
+  if (!price && price !== 0) return "";
+  const decimalPart = Math.round((price % 1) * 100);
+  return decimalPart.toString().padStart(2, "0");
 }
 
 function formatPriceToRD(number: number): string {

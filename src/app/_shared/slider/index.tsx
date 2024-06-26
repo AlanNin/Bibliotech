@@ -8,11 +8,17 @@ const responsive = {
   superLargeDesktop: {
     breakpoint: { max: 4000, min: 3000 },
     partialVisibilityGutter: 10,
-    items: 7,
+    items: 8,
     slidesToSlide: 8,
   },
   desktop: {
-    breakpoint: { max: 3000, min: 1280 },
+    breakpoint: { max: 3000, min: 1880 },
+    partialVisibilityGutter: 10,
+    items: 8,
+    slidesToSlide: 8,
+  },
+  laptop: {
+    breakpoint: { max: 1880, min: 1280 },
     partialVisibilityGutter: 10,
     items: 5,
     slidesToSlide: 8,
