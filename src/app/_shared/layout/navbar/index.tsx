@@ -15,6 +15,24 @@ const Navbar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+
+  const [searchInput, setSearchInput] = useState(""); 
+
+  const handleSearchInputChange = (event: any) => {
+    setSearchInput(event.target.value); 
+  };
+  
+
+
+
+  const handleSearchClick = () => {
+    if (searchInput.trim() !== "") {
+      router.push(`/search/${searchInput}`);
+    }
+  };
+
+  
+
   useEffect(() => {
     if (isSidebarOpen) {
       document.body.style.overflow = "hidden";
@@ -28,7 +46,7 @@ const Navbar = () => {
   }, [isSidebarOpen]);
 
   return (
-    <>
+
       <div className={styles.container}>
         <div className={styles.leftItemsAndSearch}>
           <div className={styles.leftItems}>
@@ -43,12 +61,25 @@ const Navbar = () => {
           </div>
 
           <div className={styles.searchBar}>
-            <input className={styles.searchInput} placeholder="Search" />
-            <MagnifyingGlassIcon className={styles.searchIcon} />
-          </div>
+          <input
+            className={styles.searchInput}
+            placeholder="Search"
+            value={searchInput} 
+            onChange={handleSearchInputChange} 
+          />
+          <MagnifyingGlassIcon
+            className={styles.searchIcon}
+            onClick={handleSearchClick} 
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && handleSearchClick) {
+                handleSearchClick();
+              }
+            }}
+             
+              />
         </div>
         <SignedOut>
-          <SignInButton>
+          <SignInButton>  
             <div className={styles.signInButton}>Sign In</div>
           </SignInButton>
         </SignedOut>
@@ -74,7 +105,7 @@ const Navbar = () => {
           <Sidebar toggleSidebar={toggleSidebar} />
         </div>
       )}
-    </>
+    </div>
   );
 };
 
