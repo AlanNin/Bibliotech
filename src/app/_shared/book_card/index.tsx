@@ -8,13 +8,12 @@ type BookProps = {
 
 export const BookCard: React.FC<BookProps> = ({ book }) => {
   const router = useRouter();
-  //console.log(book);
   return (
     <div
       className={styles.bookContainer}
-      onClick={() => router.push("/book/" + book.ISBN)}
+      onClick={() => router.push("/book/" + book?.ISBN)}
     >
-      <img src={book.IMAGEURL} alt="book cover" className={styles.bookCover} />
+      <img src={book?.IMAGEURL} alt="book cover" className={styles.bookCover} />
     </div>
   );
 };

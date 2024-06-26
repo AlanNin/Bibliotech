@@ -311,3 +311,78 @@ export async function deleteBookService(id: number) {
     }
   }
 }
+
+// GET BOOK HOME PAGE
+export async function getBooksHome() {
+  try {
+    // Obtener los libros más vendidos
+    const mostSoldBooksPromise = prisma.ventas
+      .groupBy({
+        by: ["ID_LIBRO"],
+        _count: {
+          ID_LIBRO: true,
+        },
+        orderBy: {
+          _count: {
+            ID_LIBRO: "desc",
+          },
+        },
+        take: 10,
+      })
+      .then((mostSoldBooks) => {
+        const mostSoldBookIds = mostSoldBooks.map((sale) => sale.ID_LIBRO);
+        return prisma.libro.findMany({
+          where: {
+            ID_LIBRO: {
+              in: mostSoldBookIds,
+            },
+          },
+        });
+      });
+
+    // Obtener los libros con los precios más bajos
+    const bestOffersBooksPromise = prisma.libro.findMany({
+      orderBy: {
+        PRECIO: "asc",
+      },
+      take: 10,
+    });
+
+    // Obtener los libros con los lanzamientos más recientes
+    const mostRecentBooksPromise = prisma.libro.findMany({
+      orderBy: {
+        FECHA_EDICION: "desc",
+      },
+      take: 10,
+    });
+
+    const randomBooksPromise = prisma.libro.findMany({
+      take: 10,
+      orderBy: {
+        ID_LIBRO: "asc",
+      },
+    });
+
+    const [
+      mostSoldBooks,
+      bestOffersBooks,
+      mostRecentBooks,
+      randomBooks,
+    ] = await Promise.all([
+      mostSoldBooksPromise,
+      bestOffersBooksPromise,
+      mostRecentBooksPromise,
+      randomBooksPromise,
+    ]);
+
+    return {
+      mostSold: mostSoldBooks,
+      bestOffers: bestOffersBooks,
+      mostRecent: mostRecentBooks,
+      random: randomBooks,
+    };
+  } catch (error) {
+    console.error("Error fetching books:", error);
+    throw new Error("Unable to fetch books. Please try again later.");
+  }
+}

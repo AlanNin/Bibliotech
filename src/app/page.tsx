@@ -1,9 +1,9 @@
 "use client";
 import styles from "./index.module.css";
-import { getAllBooks } from "~/server/queries/book.queries";
+import { getBooksHome } from "~/server/queries/book.queries";
 import { useEffect, useState } from "react";
-import { BookCard } from "./_shared/book_card";
 import ReactLoading from "react-loading";
+import Slider from "./_shared/slider";
 
 export default function Home() {
   const [books, setBooks] = useState<any>();
@@ -12,9 +12,15 @@ export default function Home() {
   useEffect(() => {
     setIsLoading(true);
     const fetchBooks = async () => {
-      const response = await getAllBooks();
-      setBooks(response);
-      setIsLoading(false);
+      try {
+        const response = await getBooksHome();
+        setBooks(response);
+      } catch (error) {
+        console.error("Error fetching books:", error);
+        // Manejar el error apropiadamente, como mostrar un mensaje al usuario
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchBooks();
   }, []);
@@ -29,9 +35,29 @@ export default function Home() {
         <main className={styles.main}>
           <div className={styles.container}>
             <div className={styles.booksWrapper}>
-              {books?.map((book: any) => (
-                <BookCard key={book.key} book={book} />
-              ))}
+              <div className={styles.section}>
+                <h1 className={styles.sectionTitle}>Most Sold Books</h1>
+                {books.mostSold.length > 0 ? (
+                  <Slider content={books.mostSold} />
+                ) : (
+                  <div className={styles.noBooks}>
+                    <h2>No books found</h2>
+                    <p>Try searching for a different book</p>
+                  </div>
+                )}
+              </div>
+              <div className={styles.section}>
+                <h1 className={styles.sectionTitle}>Best Offers</h1>
+                <Slider content={books.bestOffers} />
+              </div>
+              <div className={styles.section}>
+                <h1 className={styles.sectionTitle}>Most Recent Books</h1>
+                <Slider content={books.mostRecent} />
+              </div>
+              <div className={styles.section}>
+                <h1 className={styles.sectionTitle}>Explore New Books</h1>
+                <Slider content={books.random} />
+              </div>
             </div>
           </div>
         </main>
