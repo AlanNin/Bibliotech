@@ -23,6 +23,20 @@ export async function createSell(
       throw new Error("User ID is undefined");
     }
 
+    // Obtener la cantidad actual de libros
+    const libro = await prisma.libro.findUnique({
+      where: { ID_LIBRO: id_libro },
+      select: { CANTIDAD_LIBROS: true },
+    });
+
+    if (!libro) {
+      throw new Error("Libro no encontrado");
+    }
+
+    if (libro.CANTIDAD_LIBROS < cantidad_libros) {
+      throw new Error("No hay suficientes libros en stock");
+    }
+
     const createdSell = await prisma.ventas.create({
       data: {
         ENVIO: envio,
@@ -40,6 +54,11 @@ export async function createSell(
         },
         ID_USUARIO: userId?.toString(),
       },
+    });
+
+    await prisma.libro.update({
+      where: { ID_LIBRO: id_libro },
+      data: { CANTIDAD_LIBROS: libro.CANTIDAD_LIBROS - cantidad_libros },
     });
 
     return createdSell;
