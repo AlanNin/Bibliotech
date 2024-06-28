@@ -10,20 +10,20 @@
 - [x] Auth (w/ Clerk)
 - [x] Scaffold basic pages UI
 - [x] Attach database to UI
-- [~] Implement toasts
-- [ ] Search improvements areas
+- [x] Implement toasts
+- [x] Search improvements areas
 
 -- Home Sections
 
-- [ ] Trending books (most selling books)
-- [ ] Best Offers
-- [ ] New Releases
-- [ ] Explore (random)
-- [ ] Recently Added
+- [x] Trending books (most selling books)
+- [x] Best Offers
+- [x] New Releases
+- [x] Explore (random)
+- [x] Recently Added
 
 -- Categories
 
-- [ ] Add title to each category
+- [x] Add title to each category
 
 -- Payment
 
@@ -34,8 +34,8 @@
 - [x] Create book page
 - [x] Add reviews to book page
 
-## If there is enough time
+## If there is enough time (DEAD)
 
-- [ ] Error management (w/ Sentry)
-- [ ] Analytics (w/ Upstash)
-- [ ] Ratelimiting (w/ Upstash)
+- [/] Error management (w/ Sentry)
+- [/] Analytics (w/ Upstash)
+- [/] Ratelimiting (w/ Upstash)
