@@ -91,7 +91,7 @@ export const ReviewItem: React.FC<ReviewProps> = ({
           <span className={styles.reviewDate}> {formattedDate} </span>
           <Rating
             style={{ maxWidth: 80 }}
-            value={review.RATING}
+            value={review.RATING || 1}
             readOnly={true}
           />
           {isAuthor && (
