@@ -52,6 +52,7 @@ model Comentario {
   FECHA_COMENTARIO       DateTime @default(now()) @db.Date
   ID_USUARIO             String
   ID_LIBRO               Int
+  RATING                  Int?
 
   // Relaciones con Usuario y Libro
   libro   Libro   @relation(fields: [ID_LIBRO], references: [ID_LIBRO])

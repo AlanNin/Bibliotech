@@ -96,7 +96,7 @@ export default function Book() {
                   <h1 className={styles.bookLabel}>IVA: ${formatPrice(iva)}</h1>
                 </div>
 
-                <h1 className={styles.bookLabelTotal}>Total:</h1>
+                <h1 className={styles.bookLabelTotal}>Total (USD):</h1>
                 <h1 className={styles.bookPrice}>${formatPrice(total)}</h1>
 
                 {book?.IMAGEURL && (

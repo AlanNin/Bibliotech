@@ -7,6 +7,8 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/outline";
 import { useEffect, useRef, useState } from "react";
+import { Rating } from "@smastrom/react-rating";
+import "@smastrom/react-rating/style.css";
 
 type ReviewProps = {
   review: any;
@@ -87,6 +89,11 @@ export const ReviewItem: React.FC<ReviewProps> = ({
         <div className={styles.userName}>
           {review.userFullName}{" "}
           <span className={styles.reviewDate}> {formattedDate} </span>
+          <Rating
+            style={{ maxWidth: 80 }}
+            value={review.RATING}
+            readOnly={true}
+          />
           {isAuthor && (
             <div className={styles.ellipsisContainer}>
               <EllipsisHorizontalIcon

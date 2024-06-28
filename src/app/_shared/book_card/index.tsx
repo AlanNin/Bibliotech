@@ -2,6 +2,8 @@
 import { useState } from "react";
 import styles from "./index.module.css";
 import { useRouter } from "next/navigation";
+import OpenLibraryLogo from "~/../public/assets/OpenLibraryLogo.png";
+import Image from "next/image";
 
 type BookProps = {
   book: any;
@@ -22,6 +24,11 @@ export const BookCard: React.FC<BookProps> = ({ book }) => {
       {isHover && (
         <div className={styles.hoverContainer}>
           <p className={styles.price}>${book?.PRECIO}</p>
+          <Image
+            src={OpenLibraryLogo}
+            alt="OpenLibraryLogo"
+            className={styles.openLibraryLogo}
+          />
           <h1 className={styles.rating}>
             {Array.from({ length: 5 }, (_, index) => (
               <span

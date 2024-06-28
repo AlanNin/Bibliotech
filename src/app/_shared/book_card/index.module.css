@@ -34,7 +34,6 @@
   opacity: 0;
   transition: opacity 0.3s ease;
   border-radius: 10px;
-  gap: 14px;
   z-index: 1;
 }
 
@@ -50,6 +49,7 @@
   letter-spacing: 1px;
   color: white;
   margin: 0;
+  margin-bottom: 12px;
 }
 
 .rating {
@@ -74,4 +74,12 @@
   padding: 0 1px;
   font-weight: 900;
   color: #adadad;
+}
+
+.openLibraryLogo {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-top: 10px;
+  margin-bottom: 8px;
 }

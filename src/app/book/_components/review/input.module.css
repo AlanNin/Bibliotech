@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 8px;
+  gap: 12px;
 }
 
 .textarea {
@@ -30,9 +30,14 @@
   }
 }
 
+.lowerContainer {
+  justify-content: end;
+  width: 100%;
+  display: flex;
+  gap: 14px;
+}
+
 .submitButton {
-  align-self: end;
-  width: max-content;
   padding: 6px 12px;
   background-color: rgb(221, 221, 221);
   border: none;

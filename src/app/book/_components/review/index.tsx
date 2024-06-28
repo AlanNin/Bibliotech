@@ -29,6 +29,7 @@ export const Review: React.FC<ReviewProps> = ({ bookId }) => {
   const [inputs, setInputs] = useState<Inputs>({
     review: "",
   });
+  const [rating, setRating] = useState(1);
 
   const fetchReviews = async () => {
     try {
@@ -53,10 +54,11 @@ export const Review: React.FC<ReviewProps> = ({ bookId }) => {
 
   const handleSubmit = async () => {
     try {
-      await createComment(inputs.review, bookId);
+      await createComment(inputs.review, bookId, rating);
       setInputs({
         review: "",
       });
+      setRating(1);
       fetchReviews();
       toast.success("Review posted successfully");
     } catch (error) {
@@ -111,6 +113,8 @@ export const Review: React.FC<ReviewProps> = ({ bookId }) => {
               inputs={inputs}
               handleChange={handleChange}
               handleSubmit={handleSubmit}
+              setRating={setRating}
+              rating={rating}
             />
           </SignedIn>
           {reviews.length > 0 ? (

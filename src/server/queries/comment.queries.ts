@@ -5,7 +5,8 @@ import prisma from "../prismaClient";
 // CREATE COMMENT
 export async function createComment(
   descripcion_comentario: string,
-  id_libro: number
+  id_libro: number,
+  rating: number
 ) {
   try {
     const { userId } = auth();
@@ -15,6 +16,7 @@ export async function createComment(
     const createdComment = await prisma.comentario.create({
       data: {
         DESCRIPCION_COMENTARIO: descripcion_comentario,
+        RATING: rating,
         ID_USUARIO: userId?.toString(),
         libro: {
           connect: { ID_LIBRO: id_libro },
@@ -24,11 +26,7 @@ export async function createComment(
 
     return createdComment;
   } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(error.message);
-    } else {
-      throw new Error("An unknown error occurred.");
-    }
+    //
   }
 }
 

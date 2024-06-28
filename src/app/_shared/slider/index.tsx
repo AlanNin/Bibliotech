@@ -6,13 +6,13 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 
 const responsive = {
   superLargeDesktop: {
-    breakpoint: { max: 4000, min: 3000 },
+    breakpoint: { max: 4000, min: 2100 },
     partialVisibilityGutter: 10,
-    items: 8,
-    slidesToSlide: 8,
+    items: 11,
+    slidesToSlide: 11,
   },
   desktop: {
-    breakpoint: { max: 3000, min: 1880 },
+    breakpoint: { max: 2100, min: 1880 },
     partialVisibilityGutter: 10,
     items: 8,
     slidesToSlide: 8,
@@ -21,13 +21,13 @@ const responsive = {
     breakpoint: { max: 1880, min: 1280 },
     partialVisibilityGutter: 10,
     items: 5,
-    slidesToSlide: 8,
+    slidesToSlide: 5,
   },
   tablet: {
     breakpoint: { max: 1280, min: 464 },
     partialVisibilityGutter: 10,
     items: 4,
-    slidesToSlide: 5,
+    slidesToSlide: 4,
     swipeable: true,
     draggable: true,
   },
