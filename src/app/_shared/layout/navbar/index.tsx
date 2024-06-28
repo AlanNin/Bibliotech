@@ -31,7 +31,7 @@ const Navbar = () => {
 
   const handleSearch = () => {
     if (inputs.search.length > 0) {
-      router.push(`/search/${inputs.search}`);
+      router.push(`/search?q=${inputs.search}`);
     }
   };
 

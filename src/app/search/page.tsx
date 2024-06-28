@@ -5,27 +5,28 @@ import { useEffect, useState } from "react";
 import { BookCard } from "~/app/_shared/book_card";
 import ReactLoading from "react-loading";
 import { FaceFrownIcon } from "@heroicons/react/24/outline";
-import { useParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 export default function Home() {
   const [books, setBooks] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const { book } = useParams();
+  const searchParams = useSearchParams();
+  const toLook = searchParams.get("q");
   useEffect(() => {
     setIsLoading(true);
     const fetchBooks = async () => {
-      if (typeof book === "string") {
-        const response = await getBookByNameService(book);
+      if (typeof toLook === "string") {
+        const response = await getBookByNameService(toLook);
 
         setBooks(response);
       } else {
-        console.error("Invalid book:", book);
+        console.error("Invalid book:", toLook);
       }
       setIsLoading(false);
     };
 
     fetchBooks();
-  }, [book]);
+  }, [toLook]);
 
   return (
     <>
@@ -39,7 +40,7 @@ export default function Home() {
             <main className={styles.main}>
               <div className={styles.container}>
                 <h1 className={styles.title}>
-                  Results for: <span className={styles.span}>{book}</span>
+                  Results for: <span className={styles.span}>{toLook}</span>
                 </h1>
                 <div className={styles.booksWrapper}>
                   {books?.map((book: any) => (

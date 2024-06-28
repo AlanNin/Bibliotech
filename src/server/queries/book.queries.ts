@@ -155,6 +155,7 @@ export async function getBookByID(id: number) {
 // SEARCH BOOKS BY TITLE
 export async function getBookByNameService(tolook: String) {
   try {
+    console.log(tolook);
     var requestedBooks = null;
     requestedBooks = await prisma.libro.findMany({
       where: {
