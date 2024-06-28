@@ -93,7 +93,7 @@ export default function Book() {
                     Subtotal: ${formatPrice(subTotal)}
                   </h1>
 
-                  <h1 className={styles.bookLabel}>IVA: ${formatPrice(iva)}</h1>
+                  <h1 className={styles.bookLabel}>Tax: ${formatPrice(iva)}</h1>
                 </div>
 
                 <h1 className={styles.bookLabelTotal}>Total (USD):</h1>

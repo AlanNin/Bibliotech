@@ -169,7 +169,7 @@ export default function Invoice({ invoiceData }: InvoiceProps): JSX.Element {
             <span className={styles.preTotalValue}>${subtotal.toFixed(2)}</span>
           </div>
           <div className={styles.preTotal}>
-            IVA total:{" "}
+            Tax total:{" "}
             <span className={styles.preTotalValue}>${iva.toFixed(2)}</span>
           </div>
           <div className={styles.total}>
