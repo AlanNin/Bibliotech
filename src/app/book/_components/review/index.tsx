@@ -53,16 +53,18 @@ export const Review: React.FC<ReviewProps> = ({ bookId }) => {
   };
 
   const handleSubmit = async () => {
-    try {
-      await createComment(inputs.review, bookId, rating);
-      setInputs({
-        review: "",
-      });
-      setRating(1);
-      fetchReviews();
-      toast.success("Review posted successfully");
-    } catch (error) {
-      toast.error("Error posting review");
+    if (inputs.review.length > 0) {
+      try {
+        await createComment(inputs.review, bookId, rating);
+        setInputs({
+          review: "",
+        });
+        setRating(1);
+        fetchReviews();
+        toast.success("Review posted successfully");
+      } catch (error) {
+        toast.error("Error posting review");
+      }
     }
   };
 
