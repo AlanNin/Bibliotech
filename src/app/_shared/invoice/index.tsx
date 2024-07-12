@@ -10,7 +10,7 @@ type ProductSell = {
   detail: string;
   price: number;
   quantity: number;
-  iva: number;
+  tax: number;
   subtotal: number;
   total: number;
 };
@@ -34,8 +34,8 @@ const columns: Column<ProductSell>[] = [
     accessor: "quantity",
   },
   {
-    Header: "IVA",
-    accessor: "iva",
+    Header: "TAX",
+    accessor: "tax",
     Cell: ({ value }) => `$${value.toFixed(2)}`,
   },
   {
@@ -44,7 +44,7 @@ const columns: Column<ProductSell>[] = [
     Cell: ({ value }) => `$${value.toFixed(2)}`,
   },
   {
-    Header: "Subtotal + IVA",
+    Header: "Subtotal + Tax",
     accessor: "total",
     Cell: ({ value }) => `$${value.toFixed(2)}`,
   },
@@ -74,8 +74,8 @@ export default function Invoice({ invoiceData }: InvoiceProps): JSX.Element {
   const price = invoiceData?.bookInfo?.PRECIO;
   const quantity = invoiceData?.CANTIDAD_LIBROS;
   const subtotal = invoiceData?.bookInfo?.PRECIO * invoiceData?.CANTIDAD_LIBROS;
-  const iva = subtotal * 0.04; // 4%
-  const total = subtotal + iva;
+  const tax = subtotal * 0.16; // 16%
+  const total = subtotal + tax;
   const paymentReference = invoiceData?.ID_STRIPE;
 
   const data: ProductSell[] = [
@@ -84,7 +84,7 @@ export default function Invoice({ invoiceData }: InvoiceProps): JSX.Element {
       detail: detail,
       price: price,
       quantity: quantity,
-      iva: iva,
+      tax: tax,
       subtotal: subtotal,
       total: total,
     },
@@ -170,7 +170,7 @@ export default function Invoice({ invoiceData }: InvoiceProps): JSX.Element {
           </div>
           <div className={styles.preTotal}>
             Tax total:{" "}
-            <span className={styles.preTotalValue}>${iva.toFixed(2)}</span>
+            <span className={styles.preTotalValue}>${tax.toFixed(2)}</span>
           </div>
           <div className={styles.total}>
             Total: <span>${total.toFixed(2)}</span>

@@ -50,7 +50,7 @@ export default function Book() {
   }, [token, user, isLoaded]);
 
   const subTotal = book?.PRECIO * data?.quantity;
-  const iva = subTotal * 0.04;
+  const iva = subTotal * 0.16;
   const total = subTotal + iva;
 
   const paymentData = {
