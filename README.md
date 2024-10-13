@@ -30,6 +30,7 @@ Welcome to **Bibliotech**, your go-to destination for discovering and purchasing
 - Secure user authentication and profiles powered by **Clerk**.
 - Manage your personal library and track recent purchases.
 - Personalized recommendations based on your reading habits.
+- Role management, only administrators can manage inventory!.
 
 ### 5. **Shopping Cart and Payments**
 
