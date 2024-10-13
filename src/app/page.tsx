@@ -16,7 +16,6 @@ export default function Home() {
         const response = await getBooksHome();
         setBooks(response);
       } catch (error) {
-        console.error("Error fetching books:", error);
         // Manejar el error apropiadamente, como mostrar un mensaje al usuario
       } finally {
         setIsLoading(false);
